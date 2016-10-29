@@ -114,7 +114,7 @@ a {
 	font-size: 5em;
 	color: white;
 	font-family: 'Russo One', sans-serif;
-
+	text-shadow: 2px 2px 3px #777; 
 	/*font-family: sans-serif;*/
 	text-align: center;
 	/*width: 700px;*/
