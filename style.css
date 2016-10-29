@@ -99,6 +99,7 @@ a {
 	background-image: url(background.jpg);
     background-position: center; 
     background-origin: border-box;
+    background-size:cover;
 	height: 100vh;
 }
 
