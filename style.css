@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+nav * {
+	color: white;
+	display: inline-block;
+	text-decoration: none;
+
+}
+
+nav {
+	height: 94px;
+}
+
+nav > .left {
+	float: left;
+	padding: 20px;
+
+}
+
+nav > .right {
+	padding: 20px;
+	margin-right: 80px;
+
+	float: right;
+	/*height: 80px;*/
+	/*line-height: 80px;*/
+	text-align: center;
+	/*font-size: 2em;*/
+	text-decoration: none;
+
+}
+
+nav > .left > a {
+	font-size: 3em;
+}
+
+#logo{
+	position: absolute;
+	transition: all 1s;
+	left: 20px;
+	top: 30px;
+}
+
+#logo.active {
+	left: 50%;
+	top: 50%;
+	transform: scale(3);
+}
+
+nav > .right > a {
+	margin: 20px;
+	font-size: 2.5em;
+	/*font-family: Helvetica;*/
+	font-family: 'Russo One', sans-serif;
+	padding-bottom: 10px;
+	border-bottom: 0.1em white solid;
+	font-weight: 900;
+	transition: padding-bottom .3s;
+
+}
+
+
+
+nav > .right > a:hover{
+	padding-bottom: 20px;
+
+}
+
+nav a {
+	color: white;
+}
+
+a {
+	text-decoration: none;
+}
+
+.box {
+	display: flex;
+}
+
+nav {
+	padding: 10px;
+	flex: 1;
+	/*background-color: #80bfff;*/
+	text-decoration: none;
+
+}
+
+
+
+.main {
+	flex: 5;
+	background-image: url(background.jpg);
+	height: 100vh;
+}
+
+#pages {
+}
+
+#pages > .page {
+	/*display: inline-block;*/
+	
+	display: block;
+	height: 60vh;
+	width: 60vw;
+	margin-top: 10vh;
+	margin-left: 20vw;
+	margin-right: 20vw;
+	border: 5px black solid;
+	box-shadow: 0px 0px 20px black;
+	background-color: grey;
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
