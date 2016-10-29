@@ -52,8 +52,9 @@ nav > .left > .logo > a {
 #logo{
 	position: absolute;
 	transition: all 1s;
-	left: 20px;
+	left: 40px;
 	top: 30px;
+	font-family: sans-serif;
 }
 
 #logo.active {
@@ -64,7 +65,7 @@ nav > .left > .logo > a {
 
 nav > .right > a {
 	margin: 20px;
-	font-size: 2.5em;
+	font-size: 4vh;
 	/*font-family: Helvetica;*/
 	font-family: 'Russo One', sans-serif;
 	padding-bottom: 10px;
@@ -96,6 +97,8 @@ a {
 .main {
 	flex: 5;
 	background-image: url(background.jpg);
+    background-position: center; 
+    background-origin: border-box;
 	height: 100vh;
 }
 
@@ -109,7 +112,9 @@ a {
 	font-weight: 900;
 	font-size: 5em;
 	color: white;
-	font-family: sans-serif;
+	font-family: 'Russo One', sans-serif;
+
+	/*font-family: sans-serif;*/
 	text-align: center;
 	/*width: 700px;*/
 	line-height: 54vh;
