@@ -14,7 +14,7 @@
 <script>
 import PouchDB from "pouchdb"
 
-var events = new PouchDB('http://localhost:5984/events');
+var events = new PouchDB('http://ecncrew.tk:5984/events');
 
 
 
