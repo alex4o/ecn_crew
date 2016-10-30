@@ -4,13 +4,9 @@
 <div class="main">
 			<nav>
 				<div class="left">
-				<div class="logo">
-					<transition name="slide-fade" appear>
-
-							<a id="logo" class="active" href="#/">ecnc</a>
-					</transition>
-
-				</div>
+					<!-- <transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear> -->
+							<a id="logo" v-bind:class="{ active: !active }" href="#/">ecnc</a>
+					<!-- </transition> -->
 				</div>
 				<div class="right">
 				<a href="#/music">Music</a>
@@ -22,7 +18,7 @@
 			</nav>
 			<span class="clear"></span>
 
-			<router-view></router-view>
+			<router-view class="content" v-bind:class="{ active: content }"></router-view>
 
 		<!--  <div id="pages">
 				<div class="page page-1">
@@ -35,33 +31,45 @@
 </template>
 
 <script>
-export default {
-	name: 'home',
+import Velocity from "velocity-animate"
 
+export default {
+	name: 'app',
+	data: function() {
+		return {
+			active: true,
+			content: false
+		}
+	},
 	components: {
 		
+	},
+	mounted: function () {
+		setTimeout(() => {
+			this.active = false
+			setTimeout(() => {
+				this.content = true
+			}, 1000)
+		}, 1000)
 	}
 }
 </script>
 
-<style scoped>
+<style lang="stylus">
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
 @import url('http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css');
 
+.content {
+	transition: all .7s;
+	opacity: 0;
 
-.slide-fade-enter-active {
-  /*transition: all .3s ease;*/
-	transition: all 1s;
+	&.active {
+		opacity: 1;
 
+	}
 }
-.slide-fade-leave-active {
-  /*transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);*/
-}
-.slide-fade-enter, .slide-fade-leave-active {
-	/*left: 50%;*/
-	/*top: 50%;*/
-	transform: scale(3) translate(50% , 505);
-}
+
+
 
 nav * {
 	color: white;
@@ -70,7 +78,6 @@ nav * {
 }
 
 nav {
-	padding: 10px;
 	display: flex !important;
 	justify-content: space-between;
 	/*background-color: #80bfff;*/
@@ -78,10 +85,6 @@ nav {
 	clear: both;
 	flex-direction: row;
 	margin-bottom: 1em;
-}
-
-.logo {
-
 }
 
 nav > .left {
@@ -106,18 +109,29 @@ nav > .right {
 
 }
 
-nav > .left > .logo > a {
+nav > .left > #logo {
 	font-size: 3em;
 }
 
 #logo{
-	position: relative;
-	left: 40px;
-	top: 30px;
+
+	left: 50%;
+	top: 50%;
+
+	transform: translateX(-50%) translateY(-50%) scale(3) ;
+
+	position: absolute;
+
 	font-family: sans-serif;
+	transition: all 1s;
 }
 
 #logo.active {
+	transform: scale(1);
+	left: 20px;
+	top: 20px;
+
+
 
 }
 
