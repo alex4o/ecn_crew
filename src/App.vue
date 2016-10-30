@@ -1,6 +1,67 @@
+
+<template>
+
+<div class="main">
+			<nav>
+				<div class="left">
+				<div class="logo">
+					<transition name="slide-fade" appear>
+
+							<a id="logo" class="active" href="#/">ecnc</a>
+					</transition>
+
+				</div>
+				</div>
+				<div class="right">
+				<a href="#/music">Music</a>
+				<a href="#/sports">Sports</a>
+				<a href="#/shows">Shows</a>
+				<a href="#/art">Art</a>
+				<a href="#/events">Events</a>
+				</div>
+			</nav>
+			<span class="clear"></span>
+
+			<router-view></router-view>
+
+		<!--  <div id="pages">
+				<div class="page page-1">
+
+					
+				</div>
+			</div> -->
+
+		</div>    
+</template>
+
+<script>
+export default {
+	name: 'home',
+
+	components: {
+		
+	}
+}
+</script>
+
+<style scoped>
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
 @import url('http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css');
 
+
+.slide-fade-enter-active {
+  /*transition: all .3s ease;*/
+	transition: all 1s;
+
+}
+.slide-fade-leave-active {
+  /*transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);*/
+}
+.slide-fade-enter, .slide-fade-leave-active {
+	/*left: 50%;*/
+	/*top: 50%;*/
+	transform: scale(3) translate(50% , 505);
+}
 
 nav * {
 	color: white;
@@ -50,17 +111,14 @@ nav > .left > .logo > a {
 }
 
 #logo{
-	position: absolute;
-	transition: all 1s;
+	position: relative;
 	left: 40px;
 	top: 30px;
 	font-family: sans-serif;
 }
 
 #logo.active {
-	left: 50%;
-	top: 50%;
-	transform: scale(3);
+
 }
 
 nav > .right > a {
@@ -96,43 +154,14 @@ a {
 
 .main {
 	flex: 5;
-	background-image: url(background.jpg);
-    background-position: center; 
-    background-origin: border-box;
-    background-size:cover;
+	/*background-image: url(../static/background.jpg);*/
+	background: black;
+		background-position: center; 
+		background-origin: border-box;
+		background-size:cover;
 	height: 100vh;
 }
 
-#pages {
-	color: white;
-	text-align: center;
 
-}
 
-#pages h1 {
-	font-weight: 900;
-	font-size: 5em;
-	color: white;
-	font-family: 'Russo One', sans-serif;
-	text-shadow: 2px 2px 3px #777; 
-	/*font-family: sans-serif;*/
-	text-align: center;
-	/*width: 700px;*/
-	line-height: 54vh;
-	margin: auto;
-}
-
-#pages > .page {
-	/*display: inline-block;*/
-	
-	display: block;
-	height: 60vh;
-	width: 60vw;
-	margin-top: 10vh;
-	margin-left: 20vw;
-	margin-right: 20vw;
-	/*border: 5px black solid;*/
-	/*box-shadow: 0px 0px 20px black;*/
-	/*background-color: grey;*/
-}
-
+</style>
