@@ -154,8 +154,8 @@ a {
 
 .main {
 	flex: 5;
-	/*background-image: url(../static/background.jpg);*/
-	background: black;
+	background-image: url(../static/background.jpg);
+	/*background: black;*/
 		background-position: center; 
 		background-origin: border-box;
 		background-size:cover;
