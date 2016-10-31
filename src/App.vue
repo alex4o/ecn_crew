@@ -20,6 +20,7 @@
 
 			<router-view class="content" v-bind:class="{ active: content }"></router-view>
 
+			<audio src="http://ecncrew.tk:8000/source" controls="controls" id="radio"></audio>
 		<!--  <div id="pages">
 				<div class="page page-1">
 
@@ -69,7 +70,11 @@ export default {
 	}
 }
 
-
+#radio
+	position: fixed
+	bottom: 20px
+	right: 20px
+	// background-color: black
 
 nav * {
 	color: white;

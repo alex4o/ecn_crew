@@ -1,6 +1,6 @@
 <template>
 
- 		<div id="pages">
+		<div id="pages">
 			<div class="page">
 				<h1>Events</h1>
 				<div v-for="doc in docs">
@@ -31,14 +31,28 @@ export default {
 	},
 	mounted: function () {
 		events.allDocs({
-  include_docs: true
-}).then((result) => {
-	console.log(result.rows)
-	this.docs =  result.rows
-  // handle result
-}).catch(function (err) {
-  console.log(err);
-});
+			include_docs: true
+		}).then((result) => {
+			console.log(result.rows)
+			this.docs =  result.rows
+			// handle result
+		}).catch(function (err) {
+			console.log(err);
+		});
+
+		events.changes({live: true}).on("change", () => {
+			events.allDocs({
+				include_docs: true
+			}).then((result) => {
+				console.log(result.rows)
+				this.docs =  result.rows
+				// handle result
+			}).catch(function (err) {
+				console.log(err);
+			});
+		})
+
+
 	}
 }
 </script>
