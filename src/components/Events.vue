@@ -12,11 +12,7 @@
 </template>
 
 <script>
-import PouchDB from "pouchdb"
-
-var events = new PouchDB('http://ecncrew.tk:5984/events');
-
-
+let events = null
 
 export default {
 	name: 'home',
@@ -28,6 +24,9 @@ export default {
 	},
 	components: {
 		
+	},
+	created: function() {
+		events = this.$pouchDB.events()
 	},
 	mounted: function () {
 		events.allDocs({
