@@ -3,6 +3,7 @@
 		<div id="pages">
 			<div class="page">
 				<h1>Events</h1>
+				<input type="text" class="search" placeholder="Search">
 				<div v-for="doc in docs">
 					<h2>{{doc.doc.title}}</h2>
 					{{doc.doc.content}} 
@@ -13,6 +14,7 @@
 
 <script>
 let events = null
+let changes = null
 
 export default {
 	name: 'home',
@@ -27,36 +29,48 @@ export default {
 	},
 	created: function() {
 		events = this.$pouchDB.events()
-	},
-	mounted: function () {
+
 		events.allDocs({
 			include_docs: true
 		}).then((result) => {
-			console.log(result.rows)
+			// console.log(result.rows)
 			this.docs =  result.rows
 			// handle result
 		}).catch(function (err) {
 			console.log(err);
 		});
-
-		events.changes({live: true}).on("change", () => {
+// feign sleep - when you pretend
+	},
+	mounted: function () {
+		// console.log("mounted")
+		changes = events.changes({live: true}).on("change", () => {
 			events.allDocs({
 				include_docs: true
 			}).then((result) => {
-				console.log(result.rows)
+				// console.log("update",result.rows)
 				this.docs =  result.rows
 				// handle result
 			}).catch(function (err) {
 				console.log(err);
 			});
 		})
-
-
+	},
+	beforeDestroy: () => {
+		// console.log("bDest:", this)
+		changes.cancel()
 	}
 }
 </script>
 
-<style scoped>
+<style scoped lang="stylus">
+.search
+	background-color rgba(0,0,0,0)
+	border: none
+	width 50vw
+	color white
+	font-size 2em
+	border-bottom 3px solid white
+
 #pages {
 	color: white;
 	text-align: center;

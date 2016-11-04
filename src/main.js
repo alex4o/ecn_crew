@@ -3,6 +3,8 @@ import App from './App.vue'
 
 import Home from './components/Home.vue'
 import Events from './components/Events.vue'
+import Art from './components/Art.vue'
+import Shows from './components/Shows.vue'
 
 import VueRouter from 'vue-router'
 import PouchDB from "pouchdb"
@@ -45,7 +47,9 @@ Vue.use(vp)
 
 let router = new VueRouter({ routes: [
 	{ path: "/", component: Home },
-	{ path: "/events", component: Events }
+	{ path: "/events", component: Events },
+	{ path: "/art", component: Art },
+	{ path: "/shows", component: Shows }
 ]})
 
 

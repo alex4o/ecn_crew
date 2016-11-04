@@ -2,7 +2,7 @@
 
  			<div id="pages">
 				<div class="page">
-				<h1>Welcome to ecnc</h1>
+				<h1>Welcome</h1>
 
 				</div>
 			</div>
@@ -14,16 +14,17 @@ export default {
 
 	components: {
 		
+	},
+	mounted: function() {
+		this.$emit("bg")
 	}
 }
 </script>
 
-<style scoped>
-#pages {
+<style scoped lang="stylus">
+#pages
 	color: white;
 	text-align: center;
-
-}
 
 #pages h1 {
 	font-weight: 900;

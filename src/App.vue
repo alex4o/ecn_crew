@@ -1,7 +1,8 @@
 
 <template>
 
-<div class="main">
+	background-image: url(../static/background.jpg);
+<div class="main" v-bind:style="{ background: bg }">
 			<nav>
 				<div class="left">
 					<!-- <transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear> -->
@@ -18,9 +19,18 @@
 			</nav>
 			<span class="clear"></span>
 
-			<router-view class="content" v-bind:class="{ active: content }"></router-view>
+			<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
 
-			<audio src="http://ecncrew.tk:8000/source" controls="controls" id="radio"></audio>
+			<div id="radio">
+				<div class="bar">
+					RADIO
+				</div>
+				<div class="content">
+					<audio src="http://ecncrew.tk:8000/source" controls="controls"></audio>
+					
+				</div>				
+			</div>
+
 		<!--  <div id="pages">
 				<div class="page page-1">
 
@@ -39,11 +49,22 @@ export default {
 	data: function() {
 		return {
 			active: true,
-			content: false
+			content: false,
+			bg: "url(../static/background.jpg)"
 		}
 	},
 	components: {
 		
+	},
+	methods: {
+		chBg: function(background) {
+			if(background == null){
+				this.bg = "url(../static/background.jpg)"				
+
+			}else{
+				this.bg = background				
+			}
+		}
 	},
 	mounted: function () {
 		setTimeout(() => {
@@ -60,20 +81,30 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
 @import url('http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css');
 
-.content {
-	transition: all .7s;
-	opacity: 0;
+.main > .content
+	transition: all .7s
+	opacity: 0
 
-	&.active {
-		opacity: 1;
-
-	}
-}
+	&.active 
+		opacity: 1
 
 #radio
 	position: fixed
-	bottom: 20px
+	bottom: 0px
 	right: 20px
+	.bar 
+		color white
+		text-align center
+		border-left: 2px solid white
+		border-right: 2px solid white
+		border-top: 2px solid white
+		border-radius 20px 20px 0px 0px
+		padding 10px
+		font-family: 'Russo One', sans-serif;
+		
+	.content
+		height: 0px
+		
 	// background-color: black
 
 nav * {
@@ -171,15 +202,13 @@ a {
 	display: flex;
 }
 
-.main {
-	flex: 5;
-	background-image: url(../static/background.jpg);
-	/*background: black;*/
-		background-position: center; 
-		background-origin: border-box;
-		background-size:cover;
+.main 
+	background-position: center; 
+	background-origin: border-box;
+	background-size:cover;
 	height: 100vh;
-}
+	transition: all 1s
+
 
 
 
