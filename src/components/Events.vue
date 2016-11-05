@@ -70,6 +70,8 @@ export default {
 	color white
 	font-size 2em
 	border-bottom 3px solid white
+	outline: none;
+	font-family sans-serif		
 
 #pages {
 	color: white;

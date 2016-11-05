@@ -21,16 +21,7 @@
 
 			<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
 
-			<div id="radio">
-				<div class="bar">
-					RADIO
-				</div>
-				<div class="content">
-					<audio src="http://ecncrew.tk:8000/source" controls="controls"></audio>
-					
-				</div>				
-			</div>
-
+			<radio/>
 		<!--  <div id="pages">
 				<div class="page page-1">
 
@@ -43,6 +34,7 @@
 
 <script>
 import Velocity from "velocity-animate"
+import Radio from "./components/Radio.vue"
 
 export default {
 	name: 'app',
@@ -54,7 +46,7 @@ export default {
 		}
 	},
 	components: {
-		
+		radio: Radio
 	},
 	methods: {
 		chBg: function(background) {
@@ -88,24 +80,7 @@ export default {
 	&.active 
 		opacity: 1
 
-#radio
-	position: fixed
-	bottom: 0px
-	right: 20px
-	.bar 
-		color white
-		text-align center
-		border-left: 2px solid white
-		border-right: 2px solid white
-		border-top: 2px solid white
-		border-radius 20px 20px 0px 0px
-		padding 10px
-		font-family: 'Russo One', sans-serif;
-		
-	.content
-		height: 0px
-		
-	// background-color: black
+
 
 nav * {
 	color: white;
@@ -203,10 +178,11 @@ a {
 }
 
 .main 
-	background-position: center; 
-	background-origin: border-box;
-	background-size:cover;
-	height: 100vh;
+	background-position: center !important
+	background-origin: border-box !important
+	background-size: cover !important
+	background-repeat: no-repeat
+	height: 100vh
 	transition: all 1s
 
 
