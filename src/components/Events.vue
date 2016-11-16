@@ -4,9 +4,9 @@
 			<div class="page">
 				<h1>Events</h1>
 				<input type="text" class="search" placeholder="Search">
-				<div v-for="doc in docs">
-					<h2>{{doc.doc.title}}</h2>
-					{{doc.doc.content}} 
+				<div v-for="event in events">
+					<h2>{{event.title}}</h2>
+					{{event.content}} 
 				</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@ export default {
 	data:() => {
 		return {
 			info: "",
-			docs: []
+			events: []
 		}
 	},
 	components: {
@@ -34,7 +34,7 @@ export default {
 			include_docs: true
 		}).then((result) => {
 			// console.log(result.rows)
-			this.docs =  result.rows
+			this.events =  result.rows.map(doc => doc.doc)
 			// handle result
 		}).catch(function (err) {
 			console.log(err);
@@ -48,7 +48,8 @@ export default {
 				include_docs: true
 			}).then((result) => {
 				// console.log("update",result.rows)
-				this.docs =  result.rows
+				this.events =  result.rows.map(doc => doc.doc)
+
 				// handle result
 			}).catch(function (err) {
 				console.log(err);
