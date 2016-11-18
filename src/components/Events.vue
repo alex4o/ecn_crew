@@ -1,5 +1,4 @@
 <template>
-
 		<div id="pages">
 			<div class="page">
 				<div class="head">
@@ -7,10 +6,17 @@
 					<input type="text" class="search" placeholder="Search">
 				</div>
 				
-				<div class="card" v-for="doc in docs">
+				<div class="card" v-for="event in events">
 					
-					{{doc.doc.title}}
-					{{doc.doc.content}}
+					<img v-if="!event._attachments" src="../../static/default-placeholder-1024x1024.png">
+					<img v-else v-bind:src="url + ':5984/events/' + event._id + '/' + Object.keys(event._attachments)[0] ">
+					<div class="content">
+						<h2>{{event.title}}</h2>
+						<p>{{event.content}}</p>
+						<div class="bot">
+							{{event.when}} - {{event.where}}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -24,7 +30,7 @@ export default {
 	name: 'home',
 	data:() => {
 		return {
-			info: "",
+			url: "",
 			events: []
 		}
 	},
@@ -33,32 +39,29 @@ export default {
 	},
 	created: function() {
 		events = this.$pouchDB.events()
+		this.url = 'http://' + this.$pouchDB.url
 
-		events.allDocs({
-			include_docs: true
-		}).then((result) => {
-			// console.log(result.rows)
-			this.events =  result.rows.map(doc => doc.doc)
-			// handle result
-		}).catch(function (err) {
-			console.log(err);
-		});
-// feign sleep - when you pretend
-	},
-	mounted: function () {
-		// console.log("mounted")
 		changes = events.changes({live: true}).on("change", () => {
 			events.allDocs({
 				include_docs: true
 			}).then((result) => {
 				// console.log("update",result.rows)
-				this.events =  result.rows.map(doc => doc.doc)
+				this.events =  result.rows.map(doc => {
+					let res = doc.doc
+					// console.log(res)
+					return res
+				})
 
 				// handle result
 			}).catch(function (err) {
 				console.log(err);
 			});
 		})
+// feign sleep - when you pretend
+	},
+	mounted: function () {
+		// console.log("mounted")
+
 	},
 	beforeDestroy: () => {
 		// console.log("bDest:", this)
@@ -72,6 +75,42 @@ export default {
 	background-color #FFF
 	color black
 	margin 10px
+	// padding 20px
+	text-align left
+	// clear both
+	display flex
+	positon relative
+
+	img 
+		// display inline-block
+		width 200px
+		height 200px
+		flex 0
+		// vertical-align middle
+		// float left
+			
+		
+	.content
+		display flex
+		flex-direction column
+		margin 20px 20px 0px 20px
+		width 100%
+		
+		h2 
+			margin-bottom 10px
+			flex 0 30px
+		p
+			flex 1
+			
+		.bot 
+			flex 0 22px
+			font-weight 400
+			padding-top 2px
+			border-top 1px dashed #444
+			color rgba(44,44,44,.5)
+
+		// display inline-block
+		
 
 .head
 	display flex
