@@ -83,7 +83,7 @@ export default {
 
 	img 
 		// display inline-block
-		width 200px
+		// width 200px
 		height 200px
 		flex 0 200px
 		// vertical-align middle
