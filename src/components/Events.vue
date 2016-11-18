@@ -25,7 +25,7 @@ export default {
 	data:() => {
 		return {
 			info: "",
-			docs: []
+			events: []
 		}
 	},
 	components: {
@@ -38,7 +38,7 @@ export default {
 			include_docs: true
 		}).then((result) => {
 			// console.log(result.rows)
-			this.docs =  result.rows
+			this.events =  result.rows.map(doc => doc.doc)
 			// handle result
 		}).catch(function (err) {
 			console.log(err);
@@ -52,7 +52,8 @@ export default {
 				include_docs: true
 			}).then((result) => {
 				// console.log("update",result.rows)
-				this.docs =  result.rows
+				this.events =  result.rows.map(doc => doc.doc)
+
 				// handle result
 			}).catch(function (err) {
 				console.log(err);
@@ -91,6 +92,8 @@ export default {
 	color white
 	font-size 2em
 	border-bottom 3px solid white
+	outline: none;
+	font-family sans-serif		
 
 #pages {
 	color: white;
