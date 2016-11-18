@@ -2,11 +2,15 @@
 
 		<div id="pages">
 			<div class="page">
-				<h1>Events</h1>
-				<input type="text" class="search" placeholder="Search">
-				<div v-for="doc in docs">
-					<h2>{{doc.doc.title}}</h2>
-					{{doc.doc.content}} 
+				<div class="head">
+					<div class="ev">Events</div>
+					<input type="text" class="search" placeholder="Search">
+				</div>
+				
+				<div class="card" v-for="doc in docs">
+					
+					{{doc.doc.title}}
+					{{doc.doc.content}}
 				</div>
 			</div>
 		</div>
@@ -63,10 +67,27 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+.card
+	background-color #FFF
+	color black
+	margin 10px
+
+.head
+	display flex
+	justify-content space-araound
+
+.ev
+	width 200px
+	font-size 2em
+	font-family 'Russo One', sans-serif
+	flex 1
+
+
 .search
 	background-color rgba(0,0,0,0)
 	border: none
-	width 50vw
+	flex 5 50vw
+	margin-left 20px
 	color white
 	font-size 2em
 	border-bottom 3px solid white
