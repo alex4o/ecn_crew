@@ -1,35 +1,37 @@
 
 <template>
 
-	background-image: url(../static/background.jpg);
-<div class="main" v-bind:style="{ background: bg }">
-			<nav>
-				<div class="left">
-					<!-- <transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear> -->
-							<a id="logo" v-bind:class="{ active: !active }" href="#/">ecnc</a>
-					<!-- </transition> -->
-				</div>
-				<div class="right">
-				<a href="#/music">Music</a>
-				<a href="#/sports">Sports</a>
-				<a href="#/shows">Shows</a>
-				<a href="#/art">Art</a>
-				<a href="#/events">Events</a>
-				</div>
-			</nav>
-			<span class="clear"></span>
 
-			<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
+<div class="main" >
+		<div class="bg" v-bind:style="{ background: bg }">
+		</div>
+		<nav>
+			<div class="left">
+				<!-- <transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear> -->
+						<a id="logo" v-bind:class="{ active: !active }" href="#/">ecnc</a>
+				<!-- </transition> -->
+			</div>
+			<div class="right">
+			<a href="#/music">Music</a>
+			<a href="#/sports">Sports</a>
+			<a href="#/shows">Shows</a>
+			<a href="#/art">Art</a>
+			<a href="#/events">Events</a>
+			</div>
+		</nav>
+		<span class="clear"></span>
 
-			<radio/>
-		<!--  <div id="pages">
-				<div class="page page-1">
+		<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
 
-					
-				</div>
-			</div> -->
+		<radio/>
+	<!--  <div id="pages">
+			<div class="page page-1">
 
-		</div>    
+				
+			</div>
+		</div> -->
+
+	</div>    
 </template>
 
 <script>
@@ -73,12 +75,30 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
 @import url('http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css');
 
-.main > .content
-	transition: all .7s
-	opacity: 0
+.bg
+	position fixed
+	top 0px
+	bottom 0px
+	left 0px
+	right 0px
+	z-index -1
+	background-position: center !important
+	background-origin: border-box !important
+	background-size: cover !important
+	background-repeat: no-repeat
+	height: 100vh
+	transition: all 1s
+	
 
-	&.active 
-		opacity: 1
+.main 
+	transition: all 1s
+	
+	> .content
+		transition: all .7s
+		opacity: 0
+
+		&.active 
+			opacity: 1
 
 
 
@@ -155,15 +175,13 @@ nav > .right > a {
 	border-bottom: 0.1em white solid;
 	font-weight: 900;
 	transition: padding-bottom .3s;
-
+	&:hover{
+		padding-bottom: 20px;
+	}
 }
 
 
 
-nav > .right > a:hover{
-	padding-bottom: 20px;
-
-}
 
 nav a {
 	color: white;
@@ -173,17 +191,9 @@ a {
 	text-decoration: none;
 }
 
-.box {
+.box
 	display: flex;
-}
 
-.main 
-	background-position: center !important
-	background-origin: border-box !important
-	background-size: cover !important
-	background-repeat: no-repeat
-	height: 100vh
-	transition: all 1s
 
 
 
