@@ -137,6 +137,24 @@ export default {
 #pages {
 	color: white;
 	text-align: center;
+	
+	&  > .page {
+		/*display: inline-block;*/
+		
+		display: block;
+		// height: 60vh;
+		width: 60vw;
+		margin-top: 10vh;
+		margin-left: auto;
+		margin-right: auto;
+		
+		@media screen and (max-width: 800px) {
+			width: 80vw;
+		}
+		/*border: 5px black solid;*/
+		/*box-shadow: 0px 0px 20px black;*/
+		/*background-color: grey;*/
+	}
 
 }
 
@@ -156,20 +174,6 @@ h2 {
 	/*width: 700px;*/
 
 	margin: auto;
-}
-
-#pages > .page {
-	/*display: inline-block;*/
-	
-	display: block;
-	height: 60vh;
-	width: 60vw;
-	margin-top: 10vh;
-	margin-left: 20vw;
-	margin-right: 20vw;
-	/*border: 5px black solid;*/
-	/*box-shadow: 0px 0px 20px black;*/
-	/*background-color: grey;*/
 }
 
 </style>
