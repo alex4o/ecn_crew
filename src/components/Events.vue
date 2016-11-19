@@ -148,8 +148,12 @@ export default {
 		margin-left: auto;
 		margin-right: auto;
 		
-		@media screen and (max-width: 800px) {
+		@media screen and (max-width: 1200px) {
 			width: 80vw;
+		}
+		
+		@media screen and (max-width: 800px) {
+			width: 90vw;
 		}
 		/*border: 5px black solid;*/
 		/*box-shadow: 0px 0px 20px black;*/
