@@ -1,7 +1,6 @@
 <template>
 
-			<div id="pages">
-				<waterfall :line="line" :line-gap="300" :watch="items" align="center">
+				<waterfall :line="line" :line-gap="300" :watch="items" align="center" class="waterfall">
 					<!-- each component is wrapped by a waterfall slot -->
 					<waterfall-slot
 						v-for="(item, index) in items"
@@ -16,7 +15,7 @@
 						-->
 					</waterfall-slot>
 				</waterfall>
-			</div>
+			
 </template>
 
 <script>
@@ -42,7 +41,7 @@ export default {
 				{width: 200, height: 200, id: 9, text: "Hello"},
 				{width: 200, height: 200, id: 10, text: "Hello"},
 				{width: 200, height: 200, id: 11, text: "Hello"},
-
+				{width: 200, height: 200, id: 12, text: "Hello"}
 			]
 		}
 	},
@@ -59,6 +58,9 @@ export default {
 </script>
 
 <style scoped lang="stylus">
+
+.waterfall 
+	overflow visible !important
 
 .item
 	background white
