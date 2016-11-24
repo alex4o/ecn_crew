@@ -42,7 +42,8 @@ class VuePouch {
 Vue.use(VueRouter)
 
 let vp = new VuePouch(["events", "art", "music", "shows"])
-console.log(vp)
+
+
 Vue.use(vp)
 
 let router = new VueRouter({ routes: [
@@ -59,5 +60,3 @@ new Vue({
   router: router,
   components: { App }
 })
-
-console.log("debug: ", Vue)
