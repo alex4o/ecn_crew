@@ -31,7 +31,7 @@ export default {
 			items: [
 				{width: 400, height: 200, id: 0, text: "Hello"},
 				{width: 200, height: 200, id: 1, text: "Hello"},
-				{width: 200, height: 200, id: 2, text: "Hello"},
+				{width: 600, height: 400, id: 2, text: "Hello"},
 				{width: 200, height: 200, id: 3, text: "Hello"},
 				{width: 200, height: 200, id: 4, text: "Hello"},
 				{width: 200, height: 200, id: 5, text: "Hello"},
@@ -47,7 +47,7 @@ export default {
 	},
 	components: {
 		Waterfall,
-			WaterfallSlot
+		WaterfallSlot
 	},
 	mounted: function() {
 		// console.log(this)
