@@ -34,10 +34,15 @@ module.exports = {
   },
   module: {
     loaders: [
+    
       {
         test: /\.vue$/,
         loader: 'vue'
       },
+    { 
+            test: /(isotope|masonry|outlayer|item|get-size|fizzy-ui-utils\/utils)\.js$/, 
+            loader: 'imports?define=>false' 
+     },
       {
         test: /\.js$/,
         loader: 'babel',

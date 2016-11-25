@@ -42,7 +42,7 @@ class VuePouch {
 Vue.use(VueRouter)
 
 let vp = new VuePouch(["events", "art", "music", "shows"])
-
+console.log(vp)
 
 Vue.use(vp)
 
