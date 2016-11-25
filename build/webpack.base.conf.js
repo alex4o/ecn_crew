@@ -26,7 +26,9 @@ module.exports = {
       'vue$': 'vue/dist/vue',
       'src': path.resolve(__dirname, '../src'),
       'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components')
+      'components': path.resolve(__dirname, '../src/components'),
+      'masonry': 'masonry-layout',
+      'isotope': 'isotope-layout'
     }
   },
   resolveLoader: {
@@ -39,10 +41,6 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue'
       },
-    { 
-            test: /(isotope|masonry|outlayer|item|get-size|fizzy-ui-utils\/utils)\.js$/, 
-            loader: 'imports?define=>false' 
-     },
       {
         test: /\.js$/,
         loader: 'babel',
