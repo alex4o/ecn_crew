@@ -16,7 +16,7 @@ export default {
 		
 	},
 	mounted: function() {
-		this.$emit('bg', "green")
+		
 	}
 }
 </script>

@@ -81,6 +81,7 @@ export default {
 
 	
 		// console.log(art)
+		this.$emit('bg', "black")
 		
 
 		changes = art.changes({live: true}).on("change", () => {
@@ -112,6 +113,7 @@ export default {
 	},
 	beforeDestroy: () => {
 		// console.log("bDest:", this)
+		this.$emit('bg', "url(../static/background.jpg)")
 		changes.cancel()
 	}
 }
