@@ -2,7 +2,7 @@
 
 	<div id="radio">
 		<div v-on:click="expand" class="bar">
-			RADIO
+			РАДИО
 		</div>
 		<div class="content" v-bind:class="{ show: show }">
 			<audio src="http://ecncrew.tk:8000/source" controls="controls"></audio>

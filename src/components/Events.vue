@@ -2,8 +2,8 @@
 		<div id="pages">
 			<div class="page">
 				<div class="head">
-					<div class="ev">Events</div>
-					<input type="text" class="search" placeholder="Search">
+					<div class="ev">Събития</div>
+					<input type="text" class="search" placeholder="Търсене">
 				</div>
 				
 				<div class="card" v-for="event in events">

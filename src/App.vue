@@ -12,11 +12,11 @@
 				<!-- </transition> -->
 			</div>
 			<div class="right">
-			<a href="#/music">Music</a>
-			<a href="#/sports">Sports</a>
-			<a href="#/shows">Shows</a>
-			<a href="#/art">Art</a>
-			<a href="#/events">Events</a>
+			<a href="#/music">Музика</a>
+			<a href="#/sports">Спорт</a>
+			<a href="#/shows">Шоута</a>
+			<a href="#/art">Изкуство</a>
+			<a href="#/events">Събития</a>
 			</div>
 		</nav>
 		<span class="clear"></span>

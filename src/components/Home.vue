@@ -2,7 +2,7 @@
 
  			<div id="pages">
 				<div class="page">
-				<h1>Welcome</h1>
+				<h1>Добър ден</h1>
 
 				</div>
 			</div>
