@@ -12,11 +12,11 @@
 				<!-- </transition> -->
 			</div>
 			<div class="right">
+			<a href="#/events">Събития</a>
 			<a href="#/music">Музика</a>
 			<a href="#/sports">Спорт</a>
 			<a href="#/shows">Шоута</a>
 			<a href="#/art">Изкуство</a>
-			<a href="#/events">Събития</a>
 			</div>
 		</nav>
 		<span class="clear"></span>
@@ -155,20 +155,16 @@ nav > .left > #logo {
 
 	font-family: sans-serif;
 	transition: all 1s;
-}
-
-#logo.active {
-	transform: scale(1);
-	left: 20px;
-	top: 20px;
-
-
-
+ 	&.active {
+		transform: scale(1);
+		left: 3vw;
+		top: 10px;
+	}
 }
 
 nav > .right > a {
 	margin: 20px;
-	font-size: 4vh;
+	font-size: 2em;
 	/*font-family: Helvetica;*/
 	font-family: 'Russo One', sans-serif;
 	padding-bottom: 10px;

@@ -25,7 +25,7 @@ export default {
 	},
 	methods: {
 		expand: function () {
-			console.log("Expand")
+			// console.log("Expand")
 			this.show = !this.show
 		}
 	}
@@ -38,6 +38,9 @@ export default {
 	position: fixed
 	bottom: 0px
 	right: 20px
+	audio
+		
+
 	.bar 
 		box-shadow 0px 0px 5px black
 		color white

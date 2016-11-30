@@ -41,16 +41,17 @@ export default {
 		events = this.$pouchDB.events()
 		this.url = 'http://' + this.$pouchDB.url
 
-		changes = events.changes({live: true}).on("change", () => {
-			events.allDocs({
-				include_docs: true
-			}).then((result) => {
+		changes = events.changes({live: true}).on("change", (e) => {
+			console.log(e)
+
+			events.query("test1/new-view", {include_docs: true})
+			.then((result) => {
 				// console.log("update",result.rows)
 				this.events =  result.rows.map(doc => {
 					let res = doc.doc
 					// console.log(res)
 					return res
-				})
+				}).reverse()
 
 				// handle result
 			}).catch(function (err) {
