@@ -51,7 +51,7 @@ export default {
 					let res = doc.doc
 					// console.log(res)
 					return res
-				}).reverse()
+				})
 
 				// handle result
 			}).catch(function (err) {
