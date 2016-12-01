@@ -5,6 +5,8 @@ import Home from './components/Home.vue'
 import Events from './components/Events.vue'
 import Art from './components/Art.vue'
 import Shows from './components/Shows.vue'
+import Music from './components/Music.vue'
+import Sport from './components/Sport.vue'
 
 import VueRouter from 'vue-router'
 import PouchDB from "pouchdb"
@@ -41,18 +43,21 @@ class VuePouch {
 
 Vue.use(VueRouter)
 
-let vp = new VuePouch(["events", "art", "music", "shows"], "ecncrew.tk")
+let vp = new VuePouch(["events", "art", "music", "shows", "sport"], "ecncrew.tk")
 console.log(vp)
 
 Vue.use(vp)
 
-let router = new VueRouter({ routes: [
-	{ path: "/", component: Home },
-	{ path: "/events", component: Events },
-	{ path: "/art", component: Art },
-	{ path: "/shows", component: Shows }
-]})
-
+let router = new VueRouter({
+	routes: [
+		{ path: "/", component: Home },
+		{ path: "/events", component: Events },
+		{ path: "/art", component: Art },
+		{ path: "/shows", component: Shows },
+		{ path: "/music", component: Music },
+		{ path: "/sport", component: Sport },
+	]
+})
 
 new Vue({
   el: '#app',
