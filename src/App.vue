@@ -14,7 +14,7 @@
 			<div class="right">
 			<a href="#/events">Събития</a>
 			<a href="#/music">Музика</a>
-			<a href="#/sports">Спорт</a>
+			<a href="#/sport">Спорт</a>
 			<a href="#/shows">Предавания</a>
 			<a href="#/art">Изкуство</a>
 			</div>

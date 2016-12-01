@@ -88,9 +88,8 @@ export default {
 			console.log("change")
 			
 			
-			art.allDocs({
-				include_docs: true
-			}).then((result) => {
+			art.query("js/pictures", {include_docs: true})
+			.then((result) => {
 				// console.log(result)
 				// console.log("update",result.rows)
 				this.items =  result.rows.map(doc => {
