@@ -68,22 +68,6 @@ export default {
 		art = this.$pouchDB.art()
 		this.url = 'http://' + this.$pouchDB.url
 
-
-	},
-	mounted() {
-		// masonry = new Masonry(this.$refs.gallery, {
-		// 	layoutMode: 'masonry',
-		// 	itemSelector: '.item',
-		// 	// columnWidth: 300,
-		// 	gutter: 16,
-
-		// })
-
-	
-		// console.log(art)
-		// this.$emit('bg', "black")
-		
-
 		changes = art.changes({live: true}).on("change", () => {
 			console.log("change")
 			
@@ -109,6 +93,22 @@ export default {
 		
 
 		})
+	},
+	mounted() {
+		// masonry = new Masonry(this.$refs.gallery, {
+		// 	layoutMode: 'masonry',
+		// 	itemSelector: '.item',
+		// 	// columnWidth: 300,
+		// 	gutter: 16,
+
+		// })
+
+	
+		// console.log(art)
+		// this.$emit('bg', "black")
+		
+
+
 	},
 	beforeDestroy: () => {
 		// console.log("bDest:", this)
