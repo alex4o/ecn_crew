@@ -71,7 +71,6 @@ export default {
 		changes = art.changes({live: true}).on("change", () => {
 			console.log("change")
 			
-			
 			art.query("js/pictures", {include_docs: true})
 			.then((result) => {
 				// console.log(result)

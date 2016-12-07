@@ -3,13 +3,14 @@
 
 
 <div class="main" >
-		<div class="bg" v-bind:style="{ background: bg }">
-		</div>
-		<nav>
+		<div class="bg" v-bind:style="{ background: bg }"></div>
+
+		<router-view name="nav"></router-view>
+<!-- 		<nav>
 			<div class="left">
-				<!-- <transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear> -->
+				<transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear>
 						<a id="logo" v-bind:class="{ active: !active }" href="#/">ecnc</a>
-				<!-- </transition> -->
+				</transition>
 			</div>
 			<div class="right">
 			<a href="#/events">Събития</a>
@@ -18,9 +19,7 @@
 			<a href="#/shows">Предавания</a>
 			<a href="#/art">Изкуство</a>
 			</div>
-		</nav>
-		<span class="clear"></span>
-
+		</nav> -->
 		<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
 
 		<radio/>
@@ -96,92 +95,11 @@ export default {
 	> .content
 		transition: all .7s
 		opacity: 0
+		margin-top: 80px
 
 		&.active 
 			opacity: 1 !important
 
-
-
-nav * {
-	color: white;
-	text-decoration: none;
-
-}
-
-nav {
-	display: flex !important;
-	justify-content: space-between;
-	/*background-color: #80bfff;*/
-	text-decoration: none;
-	clear: both;
-	flex-direction: row;
-	margin-bottom: 1em;
-}
-
-nav > .left {
-	padding: 20px;
-	flex: 1 ;
-	display: block;
-
-}
-
-nav > .right {
-	padding: 20px;
-	/*flex: 2;*/
-	margin-left: auto;
-	margin-right: auto;
-	margin-right: 80px;
-
-	/*height: 80px;*/
-	/*line-height: 80px;*/
-	text-align: center;
-	/*font-size: 2em;*/
-	text-decoration: none;
-
-}
-
-nav > .left > #logo {
-	font-size: 3em;
-}
-
-#logo{
-
-	left: 50%;
-	top: 50%;
-
-	transform: translateX(-50%) translateY(-50%) scale(3) ;
-
-	position: absolute;
-
-	font-family: sans-serif;
-	transition: all 1s;
- 	&.active {
-		transform: scale(1);
-		left: 3vw;
-		top: 10px;
-	}
-}
-
-nav > .right > a {
-	margin: 20px;
-	font-size: 2em;
-	/*font-family: Helvetica;*/
-	font-family: 'Russo One', sans-serif;
-	padding-bottom: 10px;
-	border-bottom: 0.1em white solid;
-	font-weight: 900;
-	transition: padding-bottom .3s;
-	&:hover{
-		padding-bottom: 20px;
-	}
-}
-
-
-
-
-nav a {
-	color: white;
-}
 
 a {
 	text-decoration: none;

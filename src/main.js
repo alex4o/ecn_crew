@@ -1,21 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import Home from './components/Home.vue'
-import Events from './components/Events.vue'
-import Art from './components/Art.vue'
-import Shows from './components/Shows.vue'
-import Music from './components/Music.vue'
-import Sport from './components/Sport.vue'
+import Home from './pages/Home.vue'
+import Events from './pages/Events.vue'
+import Art from './pages/Art.vue'
+import Shows from './pages/Shows.vue'
+import Music from './pages/Music.vue'
+import Sport from './pages/Sport.vue'
 
 import VueRouter from 'vue-router'
 import PouchDB from "pouchdb"
 
-
+import StdNav from './components/StdNav'
+import HomeNav from './components/HomeNav'
 
 
 class VuePouch {
-	constructor(dbs = [], url = location.hostname){
+	constructor(dbs = [], url = location.hostname) {
 		this.url = url
 
 		dbs.forEach((db) => {
@@ -25,8 +26,8 @@ class VuePouch {
 		})
 	}
 
-	lazy(func, name){
-		return function() { 
+	lazy(func, name) {
+		return function() {
 			let res = func()
 			this[name] = function() {
 				return res
@@ -49,19 +50,51 @@ console.log(vp)
 Vue.use(vp)
 
 let router = new VueRouter({
-	routes: [
-		{ path: "/", component: Home },
-		{ path: "/events", component: Events },
-		{ path: "/art", component: Art },
-		{ path: "/shows", component: Shows },
-		{ path: "/music", component: Music },
-		{ path: "/sport", component: Sport },
-	]
+	routes: [{
+		path: "/",
+		components: {
+			default: Home,
+			nav: HomeNav
+		}
+	}, {
+		path: "/events",
+		components: {
+			default: Events,
+			nav: StdNav
+		}
+	}, {
+		path: "/art",
+		components: {
+			default: Art,
+			nav: StdNav
+		}
+	}, {
+		path: "/shows",
+		components: {
+			default: Shows,
+			nav: StdNav
+		}
+	}, {
+		path: "/music",
+		components: {
+			default: Music,
+			nav: StdNav
+		}
+	}, {
+		path: "/sport",
+		components: {
+			default: Sport,
+			nav: StdNav
+		}
+	}, ]
 })
 
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  router: router,
-  components: { App }
+	el: '#app',
+	template: '<App/>',
+	router: router,
+	components: {
+		App
+	}
 })
+
