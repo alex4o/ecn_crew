@@ -24,7 +24,7 @@
 	<div class="gallery " ref="gallery">
 		
 		<div v-for="item in items" :class="['item', { long : item.long }]" >
-			<div class="bg-image" :style="{ background: item.img || 'blue' }">
+			<div class="bg-image" :style="{ background: item.img || 'cyan' }">
 
 			</div>
 			<div class="text">
@@ -171,7 +171,7 @@ export default {
 		right 5px
 		bottom 5px
 		transition all 1s
-		background blue
+		background green
 		background-position: center !important
 		background-origin: border-box !important
 		background-size: cover !important
