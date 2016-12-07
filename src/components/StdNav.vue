@@ -35,7 +35,7 @@ export default {
 
 	},
 	mounted: function () {
-
+		this.$emit("content")
 	}
 }
 </script>
@@ -62,6 +62,8 @@ nav {
 	top 0px
 	left 0px
 	right 0px
+	z-index 100
+	// filter: blur(2px)
 	
 	// &:before {
 	// 	filter: blur(2px);

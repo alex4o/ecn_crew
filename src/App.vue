@@ -5,7 +5,7 @@
 <div class="main" >
 		<div class="bg" v-bind:style="{ background: bg }"></div>
 
-		<router-view name="nav"></router-view>
+		<router-view name="nav" v-on:content="show"></router-view>
 <!-- 		<nav>
 			<div class="left">
 				<transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear>
@@ -57,15 +57,18 @@ export default {
 			}else{
 				this.bg = background				
 			}
+		},
+		show() {
+			this.content = true
 		}
 	},
 	mounted: function () {
-		setTimeout(() => {
-			this.active = false
-			setTimeout(() => {
-				this.content = true
-			}, 1000)
-		}, 1000)
+		// setTimeout(() => {
+		// 	this.active = false
+		// 	setTimeout(() => {
+		// 		this.content = true
+		// 	}, 1000)
+		// }, 1000)
 	}
 }
 </script>

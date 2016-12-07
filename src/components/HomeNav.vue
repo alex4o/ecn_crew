@@ -38,6 +38,9 @@ export default {
 		if(this.active == true){
 			setTimeout(() => {
 				this.active = false
+				setTimeout(() => {
+					this.$emit("content")
+				}, 1000)
 			}, 1000)	
 		}
 	}
@@ -61,7 +64,6 @@ nav {
 	margin-bottom: 1em;
 	height 80px
 	align-items center
-	
 }
 
 nav > .left {
@@ -101,9 +103,9 @@ nav > .right > a {
 	// padding-bottom: 10px;
 	// border-bottom: 0.1em white solid;
 	font-weight: 900;
-	transition: padding-bottom .3s;
+	transition: border-bottom .3s;
 	&:hover{
-		// padding-bottom: 20px;
+		border-bottom 3px white solid
 	}
 }
 
