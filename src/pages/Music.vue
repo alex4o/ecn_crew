@@ -95,7 +95,7 @@ export default {
 
 					// console.log(res)
 					return res
-				})
+				}).reverse()
 
 				this.$nextTick(() => { // the new note hasn't been rendered yet, but in the nextTick, it will be rendered
 					masonry.reloadItems()

@@ -44,7 +44,7 @@ class VuePouch {
 
 Vue.use(VueRouter)
 
-let vp = new VuePouch(["events", "art", "music", "shows", "sport"], "ecncrew.tk")
+let vp = new VuePouch(["events", "art", "music", "shows", "sport"], "ecncrew.ml")
 console.log(vp)
 
 Vue.use(vp)

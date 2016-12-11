@@ -5,7 +5,7 @@
 			РАДИО
 		</div>
 		<div class="content" v-bind:class="{ show: show }">
-			<audio src="http://ecncrew.tk:8000/source" controls="controls"></audio>
+			<audio src="http://ecncrew.ml:8000/source" controls="controls"></audio>
 			
 		</div>				
 	</div>

@@ -42,13 +42,19 @@ export default {
 		this.url = 'http://' + this.$pouchDB.url
 
 		changes = events.changes({live: true}).on("change", (e) => {
-			console.log(e)
 
-			events.query("test1/new-view", {include_docs: true})
+			let date = new Date()
+
+			// console.log(dateArr)
+
+			events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
 			.then((result) => {
 				// console.log("update",result.rows)
+
+
 				this.events =  result.rows.map(doc => {
 					let res = doc.doc
+					// cosnole.log(res)
 					// console.log(res)
 					return res
 				})
