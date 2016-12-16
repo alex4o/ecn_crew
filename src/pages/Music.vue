@@ -62,7 +62,7 @@ export default {
 			itemSelector: '.item',
 			percentPosition: true,
 			columnWidth: '.item',
-			resize: false
+			resize: true
 		})
 	},
 	data(){
@@ -122,6 +122,9 @@ export default {
 
 		}
 	},
+	beforeDestroy: () => {
+		changes.cancel()
+	}
 }
 </script>
 

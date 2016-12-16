@@ -1,5 +1,5 @@
 <template>
-
+<div>
 	<waterfall :line="line" :line-gap="300" :min-line-gap="250" :max-line-gap="350" :watch="items" align="left" class="waterfall">
 		<!-- each component is wrapped by a waterfall slot -->
 		<waterfall-slot
@@ -9,7 +9,7 @@
 			:order="index"
 			:key="item._id"
 		>
-		<div class="item" :style="{ background: 'url(' + url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0] + ')' }">
+		<div class="item" :style="{ background: 'url(' + url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0] + ')' }" v-on:click="show(url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0], item)">
 	<!-- 		<img v-if="!item._attachments" src="../../static/default-placeholder-1024x1024.png">
 			<img v-else v-bind:src="url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0] "> -->
 		{{item.text}}
@@ -17,7 +17,10 @@
 		</waterfall-slot>
 	</waterfall>
 
-
+	<modal :show="showBigPicture" @close="closeBigPicture">
+		<div id="img" :style="{ background: 'url(' + this.open.url + ')' }" />
+	</modal>
+</div>
 <!-- 	<div class="gallery" ref="gallery">
 		<div v-for="item in items" class="item" :style="{ background: 'url(' + url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0] + ')'}">
 		<div v-for="item in items" class="item" :style="{width: (item.width / item.height) * 300 + 'px', height: 300 + 'px'}">
@@ -33,7 +36,8 @@
 
 import Waterfall from 'vue-waterfall/lib/waterfall'
 import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
-  		  
+
+import Modal from '../components/Modal'	  
 // import Masonry from 'masonry-layout'
 // let Isotope = require('isotope-layout')
 
@@ -50,6 +54,12 @@ export default {
 	data: () => {
 		return {
 			line: 'h',
+			showBigPicture: false,
+			open: {
+				url: "",
+				width: 0,
+				height: 0
+			},
 			items: [
 			
 			]
@@ -57,12 +67,25 @@ export default {
 	},
 	components: {
 		Waterfall,
-		WaterfallSlot
+		WaterfallSlot,
+		Modal
 	},
 	mounted: function() {
 		// console.log(this)
 		// console.log(this.$emit)
 		//this.$emit('bg', "red")
+	},
+	methods: {
+		show(img, item){
+			this.open.url = img
+			this.showBigPicture = true
+			this.open.width = item.width
+			this.open.height = item.height
+		},
+		closeBigPicture() {
+			console.log("asdfdsaf")
+			this.showBigPicture = false
+		}
 	},
 	created: function() {
 		art = this.$pouchDB.art()
@@ -130,10 +153,10 @@ export default {
 	// height: 300px
 	position absolute
 	
-	top 10px
-	left 10px
-	right 10px
-	bottom 10px
+	top 5px
+	left 5px
+	right 5px
+	bottom 5px
 	background-position: center !important
 	background-origin: border-box !important
 	background-size: cover !important
@@ -153,7 +176,12 @@ export default {
 }
 
 	
-	
+#img
+	width: 100%
+	height: 100%
+	background-position: center !important
+	background-repeat: no-repeat !important
+	background-size: contain !important
 
 #pages
 	display: block

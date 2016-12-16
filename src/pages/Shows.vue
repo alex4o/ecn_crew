@@ -67,6 +67,9 @@ export default {
 
 		})
 	},
+	beforeDestroy: () => {
+		changes.cancel()
+	}
 }
 </script>
 

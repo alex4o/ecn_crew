@@ -14,6 +14,7 @@ import PouchDB from "pouchdb"
 import StdNav from './components/StdNav'
 import HomeNav from './components/HomeNav'
 
+require("normalize.css")
 
 class VuePouch {
 	constructor(dbs = [], url = location.hostname) {

@@ -9,8 +9,7 @@
 				<div class="card" v-for="event in events">
 					
 					<img v-if="!event._attachments" src="../../static/default-placeholder-1024x1024.png">
-					<img v-else v-bind:src="url + ':5984/events/' + event._id + '/' + Object.keys(event._attachments)[0] ">
-					<div class="content">
+					<img v-else v-bind:src="url + ':5984/events/' + event._id + '/' + Object.keys(event._attachments)[0] "><div class="content">
 						<h2>{{event.title}}</h2>
 						<p>{{event.content}}</p>
 						<div class="bot">
@@ -85,29 +84,39 @@ export default {
 	// padding 20px
 	text-align left
 	// clear both
-	display flex
+	// display flex
 	positon relative
+	font-size 0
 
 	img 
 		// display inline-block
-		// width 200px
+		width 200px
 		height 200px
-		flex 0 200px
+		// flex 0 200px
 		// vertical-align middle
-		// float left
-			
+		display inline-block
+		vertical-align middle
+		
 		
 	.content
-		display flex
+		display inline-flex
+		// display flex
 		flex-direction column
-		margin 20px 20px 0px 20px
-		width 100%
+		vertical-align middle
+		padding 20px 20px 0px 20px
+		width calc(100% - 205px)
+		height 200px
+		box-sizing border-box
+		font-size 12pt
 		
 		h2 
 			margin-bottom 10px
 			flex 0 30px
+			font-size 1.5em
 		p
 			flex 1
+			font-size 1em
+			
 			
 		.bot 
 			flex 0 22px
@@ -115,6 +124,8 @@ export default {
 			padding-top 2px
 			border-top 1px dashed #444
 			color rgba(44,44,44,.5)
+			font-size 0.9em
+			
 
 		// display inline-block
 		

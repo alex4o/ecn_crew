@@ -75,7 +75,7 @@ export default {
 
 <style lang="stylus">
 @import url('https://fonts.googleapis.com/css?family=Russo+One');
-@import url('http://yui.yahooapis.com/3.5.0/build/cssreset/cssreset-min.css');
+
 
 .bg
 	position fixed
