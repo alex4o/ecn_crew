@@ -41,13 +41,16 @@ export default {
 	watch: {
 		search: _.debounce(async function(value){
 			// console.log(value, this)
+			value = value.trim()
+
 			if(value.length == 0){
 				let date = new Date()
 
 				let result = await events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
 				this.events =  result.rows.map(row => row.doc)
+				return
 			}
-			value = value.split(" ").map(e => e + "*~").join(" ")
+			value = value.split(" ").map(e => `${e}* OR ${e}~`).join(" ")
 			axios.get("http://ecncrew.ml/fts/local/events/_design/foo/by_title", {
 				params: {
 					q: value,
