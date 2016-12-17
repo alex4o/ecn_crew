@@ -1,8 +1,8 @@
 
 <template>
-<transition name="modal" appear>
+<transition name="modal">
 
-	<div class="modal-mask" @click="close" v-show="show" transition="modal">
+	<div class="modal-mask" @click="close" v-show="show">
 		<div class="modal-container" @click.stop :style="{ width: Math.round(width) + 'px', height: Math.round(height) + 'px' }">
 			<slot></slot>
 		</div>
@@ -56,17 +56,16 @@ export default {
 	background-color: #fff;
 	border-radius: 2px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-	transition: all .3s ease;
+	transition: all .5s ease;
 	font-family: Helvetica, Arial, sans-serif
 	box-sizeing border-box
 
 .modal-enter, .modal-leave 
 	opacity: 0
+	
 
 
-.modal-enter .modal-container,
-.modal-leave .modal-container 
-	-webkit-transform: scale(1.1)
+.modal-enter .modal-container,  .modal-leave .modal-container 
 	transform: scale(1.1)
 
 

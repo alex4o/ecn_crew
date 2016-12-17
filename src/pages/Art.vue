@@ -102,42 +102,35 @@ export default {
 		},
 		closeBigPicture() {
 			this.showBigPicture = false
-		}
-	},
-	created: function() {
-		art = this.$pouchDB.art()
-		this.url = 'http://' + this.$pouchDB.url
-
-		changes = art.changes({live: true}).on("change", () => {
-			console.log("change")
-			
+		},
+		get() {
 			art.query("js/pictures", {include_docs: true})
 			.then((result) => {
-				// console.log(result)
-				// console.log("update",result.rows)
 				this.items =  result.rows.map(doc => {
 					let res = doc.doc
-					let images = Object.keys(item._attachments)
-					res.thumbURL =  url + ':5984/art/' + item._id + '/' + images[0]
+					let images = Object.keys(res._attachments)
+					res.thumbURL =  this.url + ':5984/art/' + res._id + '/' + images[0]
 					if(images.leength > 1){
-						res.fullURL =  url + ':5984/art/' + item._id + '/' + images[1]
+						res.fullURL =  this.url + ':5984/art/' + res._id + '/' + images[1]
 					}else{
 						res.fullURL =  res.thumbURL
 
 					}
 					return res
 				}).reverse()
-
-				// this.$nextTick(() => { // the new note hasn't been rendered yet, but in the nextTick, it will be rendered
-				// 	masonry.reloadItems()
-				// 	masonry.layout()
-				// })
-					// handle result
 			}).catch(function (err) {
 				console.log(err);
 			});
-		
+		}
+	},
+	created: function() {
+		art = this.$pouchDB.art()
+		this.url = 'http://' + this.$pouchDB.url
 
+		this.get()
+		changes = art.changes({live: true, since: "now"}).on("change", () => {
+			console.log("change")		
+			this.get()
 		})
 	},
 	mounted() {

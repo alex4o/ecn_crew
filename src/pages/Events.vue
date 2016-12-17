@@ -6,25 +6,34 @@
 					<input type="text" class="search" placeholder="Търсене" v-model="search" debounce="500">
 				</div>
 				
-				<div class="card" v-for="event in events">
+				<div class="card" v-for="event in events"  @click="show(event)">
 					
 					<img v-if="!event._attachments" src="../../static/default-placeholder-1024x1024.png">
-					<img v-else v-bind:src="url + ':5984/events/' + event._id + '/' + Object.keys(event._attachments)[0] "><div class="content">
+					<img v-else v-bind:src="url + ':5984/events/' + event._id + '/' + Object.keys(event._attachments)[0] ">
+					<div class="content">
 						<h2>{{event.title}}</h2>
-						<p>{{event.content}}</p>
+						<p>
+						{{event.content}}
+						</p>
 						<div class="bot">
 							{{event.when}} - {{event.where}}
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<modal :show="modal.open" @close="close" class="modal">
+				Еби са
+			</modal>
 		</div>
 </template>
 
 <script>
 require('es6-promise').polyfill();
+
 let axios = require('axios');
 import _ from "lodash"
+import Modal from '../components/Modal'	  
 
 let events = null
 let changes = null
@@ -35,7 +44,12 @@ export default {
 		return {
 			url: "",
 			search: "",
-			events: []
+			events: [],
+			modal: {
+				open: false,
+				width: 0,
+				height: 0
+			}
 		}
 	},
 	watch: {
@@ -44,11 +58,14 @@ export default {
 			value = value.trim()
 
 			if(value.length == 0){
-				let date = new Date()
+				// let date = new Date()
 
-				let result = await events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
-				this.events =  result.rows.map(row => row.doc)
+				// let result = await events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
+				// this.events =  result.rows.map(this.docToEvent)
+				this.getNew()
+				
 				return
+
 			}
 			value = value.split(" ").map(e => `${e}* OR ${e}~`).join(" ")
 			axios.get("http://ecncrew.ml/fts/local/events/_design/foo/by_title", {
@@ -58,42 +75,46 @@ export default {
 				}
 			}).then((e) => {
 				events.bulkGet({docs: e.data.rows}).then((res) => {
-					this.events = res.results.map((row) => row.docs[0].ok) 
+					this.events = res.results.map((row) => this.docToEvent(row.docs[0].ok)) 
 				})
 			})
 		}, 300)
 	},
+	methods: {
+		show(event) {
+			this.modal.open = true
+		},
+		close(){
+			this.modal.open = false
+		},
+		docToEvent(row){
+			let res = row.doc
+			res.thumbURL = this.url + ':5984/events/' + res._id + '/' + Object.keys(res._attachments)[0]
+			return res
+		},
+		getNew() {
+			let date = new Date()
+
+			events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
+			.then((result) => {
+				this.events =  result.rows.map(this.docToEvent)
+			}).catch(function (err) {
+				console.log(err);
+			});
+		}
+	},
 	components: {
-		
+		Modal
 	},
 	created: function() {
 		events = this.$pouchDB.events()
 		this.url = 'http://' + this.$pouchDB.url
 
-		changes = events.changes({live: true}).on("change", (e) => {
-
-			let date = new Date()
-
-			// console.log(dateArr)
-
-			events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
-			.then((result) => {
-				// console.log("update",result.rows)
-
-
-				this.events =  result.rows.map(doc => {
-					let res = doc.doc
-					// cosnole.log(res)
-					// console.log(res)
-					return res
-				})
-
-				// handle result
-			}).catch(function (err) {
-				console.log(err);
-			});
+		changes = events.changes({live: true, since: "new"}).on("change", (e) => {
+			this.getNew()
 		})
-// feign sleep - when you pretend
+
+		this.getNew()
 	},
 	mounted: function () {
 		// console.log("mounted")
@@ -104,9 +125,14 @@ export default {
 		changes.cancel()
 	}
 }
+
+
 </script>
 
 <style scoped lang="stylus">
+.modal
+	color black
+
 .card
 	background-color #FFF
 	color black
@@ -138,7 +164,6 @@ export default {
 		height 200px
 		box-sizing border-box
 		font-size 12pt
-		
 		h2 
 			margin-bottom 10px
 			flex 0 30px

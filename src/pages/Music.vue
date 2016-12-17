@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import Waterfall from 'vue-waterfall/lib/waterfall'
-import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 import Masonry from 'masonry-layout'
 import Packery from 'packery'
 let Isotope = require('isotope-layout')
@@ -52,10 +50,33 @@ let masonry
 
 export default {
 	name: 'music',
+	methods: {
+		get() {
+			music.query("js/sort-date", {include_docs: true})
+			.then((result) => {
+		
+				this.items =  result.rows.map(doc => {
+					let res = doc.doc
+					
+					if(res._attachments){
+						res.img = "url(" + this.url + ':5984/music/' + res._id + '/' + Object.keys(res._attachments)[0] + ')'
+					}
 
+					return res
+				}).reverse()
+
+				this.$nextTick(() => { // the new note hasn't been rendered yet, but in the nextTick, it will be rendered
+					masonry.reloadItems()
+					masonry.layout()
+				})
+	
+			}).catch(function (err) {
+				console.log(err);
+			});
+		}
+	},
 	components: {
-		Waterfall,
-		WaterfallSlot
+
 	},
 	mounted: function() {
 		masonry = new Packery(this.$refs.gallery, {
@@ -77,41 +98,11 @@ export default {
 		let minWidth = 33.3
 		let margin = 10
 
-		changes = music.changes({live: true}).on("change", () => {
+		changes = music.changes({live: true, since: "now"}).on("change", () => {
 			console.log("change")
-			
-			music.query("js/sort-date", {include_docs: true})
-			.then((result) => {
-				// console.log(result)
-				// console.log("update",result.rows)
-				this.items =  result.rows.map(doc => {
-					let res = doc.doc
-					
-					if(res._attachments){
-						res.img = "url(" + this.url + ':5984/music/' + res._id + '/' + Object.keys(res._attachments)[0] + ')'
-					}
-
-
-
-					// console.log(res)
-					return res
-				}).reverse()
-
-				this.$nextTick(() => { // the new note hasn't been rendered yet, but in the nextTick, it will be rendered
-					masonry.reloadItems()
-					masonry.layout()
-				})
-				// this.$nextTick(() => { // the new note hasn't been rendered yet, but in the nextTick, it will be rendered
-				// 	masonry.reloadItems()
-				// 	masonry.layout()
-				// })
-					// handle result
-			}).catch(function (err) {
-				console.log(err);
-			});
-		
-
+			this.get()
 		})
+		this.get()
 
 		window.onresize = _.debounce(() => {
 			console.log("resize")
