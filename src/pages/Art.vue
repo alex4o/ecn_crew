@@ -9,7 +9,7 @@
 			:order="index"
 			:key="item._id"
 		>
-		<div class="item" :style="{ background: 'url(' + url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0] + ')' }" v-on:click="show(url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0], item)">
+		<div class="item" :style="{ background: 'url(' + item.thumbURL + ')' }" v-on:click="show(item)">
 	<!-- 		<img v-if="!item._attachments" src="../../static/default-placeholder-1024x1024.png">
 			<img v-else v-bind:src="url + ':5984/art/' + item._id + '/' + Object.keys(item._attachments)[0] "> -->
 		{{item.text}}
@@ -78,8 +78,8 @@ export default {
 		//this.$emit('bg', "red")
 	},
 	methods: {
-		show(img, item){
-			this.open.url = img
+		show(item){
+			this.open.url = item.fullURL
 			this.showBigPicture = true
 			let c1 = 1
 			let c2 = 1
@@ -87,7 +87,6 @@ export default {
 			if(item.height > window.innerHeight) {
 				 c1 = window.innerHeight/item.height
 				 c1 -= 0.1
-			
 			}
 
 			if(item.width > window.innerWidth){
@@ -97,14 +96,11 @@ export default {
 
 			let coef = Math.min(c1,c2)
 
-			console.log("Coef: ", coef)
-
 			this.open.width = (item.width)*coef
 			this.open.height = (item.height)*coef
 
 		},
 		closeBigPicture() {
-			console.log("asdfdsaf")
 			this.showBigPicture = false
 		}
 	},
@@ -121,7 +117,14 @@ export default {
 				// console.log("update",result.rows)
 				this.items =  result.rows.map(doc => {
 					let res = doc.doc
-					// console.log(res)
+					let images = Object.keys(item._attachments)
+					res.thumbURL =  url + ':5984/art/' + item._id + '/' + images[0]
+					if(images.leength > 1){
+						res.fullURL =  url + ':5984/art/' + item._id + '/' + images[1]
+					}else{
+						res.fullURL =  res.thumbURL
+
+					}
 					return res
 				}).reverse()
 
