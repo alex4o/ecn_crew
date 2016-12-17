@@ -17,8 +17,10 @@
 		</waterfall-slot>
 	</waterfall>
 
-	<modal :show="showBigPicture" @close="closeBigPicture" :width="this.open.width" :height="70">
-		<div id="img" :style="{ background: 'url(' + this.open.url + ')' }" />
+	<modal :show="showBigPicture" @close="closeBigPicture" :width="this.open.width" :height="this.open.height">
+		<!-- <div id="img" :style="{ background: 'url(' + this.open.url + ')' }" /> -->
+		<img v-bind:src="this.open.url">
+
 	</modal>
 </div>
 <!-- 	<div class="gallery" ref="gallery">
@@ -79,7 +81,26 @@ export default {
 		show(img, item){
 			this.open.url = img
 			this.showBigPicture = true
-			this.open.width = (item.width/item.height)*35
+			let c1 = 1
+			let c2 = 1
+			// let c3 = item.height/item.width
+			if(item.height > window.innerHeight) {
+				 c1 = window.innerHeight/item.height
+				 c1 -= 0.1
+			
+			}
+
+			if(item.width > window.innerWidth){
+				 c2 = window.innerWidth/item.width
+				 c2 -= 0.1
+			}
+
+			let coef = Math.min(c1,c2)
+
+			console.log("Coef: ", coef)
+
+			this.open.width = (item.width)*coef
+			this.open.height = (item.height)*coef
 
 		},
 		closeBigPicture() {
@@ -176,7 +197,7 @@ export default {
 }
 
 	
-#img
+img
 	width: 100%
 	height: 100%
 	background-position: center !important

@@ -3,7 +3,7 @@
 <transition name="modal" appear>
 
 	<div class="modal-mask" @click="close" v-show="show" transition="modal">
-		<div class="modal-container" @click.stop :style="{ width: Math.round(width) + 'vw', height: Math.round(height) + 'vh', margin: (100 - height)/2 + 'vh auto 0' }">
+		<div class="modal-container" @click.stop :style="{ width: Math.round(width) + 'px', height: Math.round(height) + 'px' }">
 			<slot></slot>
 		</div>
 	</div>
@@ -44,12 +44,15 @@ export default {
 	height: 100%;
 	background-color: rgba(0, 0, 0, .5);
 	transition: opacity .3s ease;
+	display: flex
+	justify-content: center
+	align-items center
 
 
 .modal-container
 	// width: 600px;
 
-	padding: 20px 30px;
+	padding: 20px 20px;
 	background-color: #fff;
 	border-radius: 2px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
