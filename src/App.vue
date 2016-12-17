@@ -6,29 +6,9 @@
 		<div class="bg" v-bind:style="{ background: bg }"></div>
 
 		<router-view name="nav" v-on:content="show"></router-view>
-<!-- 		<nav>
-			<div class="left">
-				<transition v-on:enter="enter" v-on:before-enter="beforeEnter" appear>
-						<a id="logo" v-bind:class="{ active: !active }" href="#/">ecnc</a>
-				</transition>
-			</div>
-			<div class="right">
-			<a href="#/events">Събития</a>
-			<a href="#/music">Музика</a>
-			<a href="#/sport">Спорт</a>
-			<a href="#/shows">Предавания</a>
-			<a href="#/art">Изкуство</a>
-			</div>
-		</nav> -->
 		<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
 
 		<radio/>
-	<!--  <div id="pages">
-			<div class="page page-1">
-
-				
-			</div>
-		</div> -->
 
 	</div>    
 </template>

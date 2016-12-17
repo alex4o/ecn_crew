@@ -39,8 +39,14 @@ export default {
 		}
 	},
 	watch: {
-		search: _.debounce(function(value){
+		search: _.debounce(async function(value){
 			// console.log(value, this)
+			if(value.length == 0){
+				let date = new Date()
+
+				let result = await events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
+				this.events =  result.rows.map(row => row.doc)
+			}
 			value = value.split(" ").map(e => e + "*~").join(" ")
 			axios.get("http://ecncrew.ml/fts/local/events/_design/foo/by_title", {
 				params: {
