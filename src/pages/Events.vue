@@ -3,7 +3,7 @@
 			<div class="page">
 				<div class="head">
 					<div class="ev">Събития</div>
-					<input type="text" class="search" placeholder="Търсене">
+					<input type="text" class="search" placeholder="Търсене" v-model="search" debounce="500">
 				</div>
 				
 				<div class="card" v-for="event in events">
@@ -22,6 +22,10 @@
 </template>
 
 <script>
+require('es6-promise').polyfill();
+let axios = require('axios');
+import _ from "lodash"
+
 let events = null
 let changes = null
 
@@ -30,8 +34,25 @@ export default {
 	data:() => {
 		return {
 			url: "",
+			search: "",
 			events: []
 		}
+	},
+	watch: {
+		search: _.debounce(function(value){
+			// console.log(value, this)
+			value = value.split(" ").map(e => e + "*~").join(" ")
+			axios.get("http://ecncrew.ml/fts/local/events/_design/foo/by_title", {
+				params: {
+					q: value,
+					stale: "ok"
+				}
+			}).then((e) => {
+				events.bulkGet({docs: e.data.rows}).then((res) => {
+					this.events = res.results.map((row) => row.docs[0].ok) 
+				})
+			})
+		}, 300)
 	},
 	components: {
 		

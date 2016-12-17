@@ -44,7 +44,7 @@ import WaterfallSlot from 'vue-waterfall/lib/waterfall-slot'
 import Masonry from 'masonry-layout'
 import Packery from 'packery'
 let Isotope = require('isotope-layout')
-
+import _ from "lodash"
 
 let music 
 let changes
@@ -113,14 +113,14 @@ export default {
 
 		})
 
-		window.onresize = () => {
+		window.onresize = _.debounce(() => {
 			console.log("resize")
 			setTimeout(() => {
 				masonry.layout()
-			}, 1000)
+			}, 100)
 			masonry.layout()
 
-		}
+		}, 1000)
 	},
 	beforeDestroy: () => {
 		changes.cancel()
