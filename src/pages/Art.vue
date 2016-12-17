@@ -17,7 +17,7 @@
 		</waterfall-slot>
 	</waterfall>
 
-	<modal :show="showBigPicture" @close="closeBigPicture">
+	<modal :show="showBigPicture" @close="closeBigPicture" :width="this.open.width" :height="70">
 		<div id="img" :style="{ background: 'url(' + this.open.url + ')' }" />
 	</modal>
 </div>
@@ -57,7 +57,7 @@ export default {
 			showBigPicture: false,
 			open: {
 				url: "",
-				width: 0,
+				width: "",
 				height: 0
 			},
 			items: [
@@ -79,8 +79,8 @@ export default {
 		show(img, item){
 			this.open.url = img
 			this.showBigPicture = true
-			this.open.width = item.width
-			this.open.height = item.height
+			this.open.width = (item.width/item.height)*35
+
 		},
 		closeBigPicture() {
 			console.log("asdfdsaf")
