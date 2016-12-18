@@ -16,6 +16,9 @@ import HomeNav from './components/HomeNav'
 
 require("normalize.css")
 
+
+console.log(process.env)
+
 class VuePouch {
 	constructor(dbs = [], url = location.hostname) {
 		this.url = url
