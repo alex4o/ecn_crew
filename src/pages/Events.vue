@@ -88,7 +88,7 @@ export default {
 			this.modal.open = false
 		},
 		docToEvent(row){
-			let res = row.doc
+			let res = row.doc || row
 			res.thumbURL = this.url + ':5984/events/' + res._id + '/' + Object.keys(res._attachments)[0]
 			return res
 		},
@@ -110,7 +110,7 @@ export default {
 		events = this.$pouchDB.events()
 		this.url = 'http://' + this.$pouchDB.url
 
-		changes = events.changes({live: true, since: "new"}).on("change", (e) => {
+		changes = events.changes({live: true, since: "now"}).on("change", (e) => {
 			this.getNew()
 		})
 

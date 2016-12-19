@@ -9,7 +9,7 @@
 			<a href="#/events">Събития</a>
 			<a href="#/music">Музика</a>
 			<a href="#/sport">Спорт</a>
-			<a href="#/shows">Предавания</a>
+			<a href="#/shows">Комедия</a>
 			<a href="#/art">Изкуство</a>
 			</div>
 		</nav>
