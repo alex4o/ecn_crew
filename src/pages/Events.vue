@@ -22,8 +22,83 @@
 				</div>
 			</div>
 
-			<modal :show="modal.open" @close="close" class="modal">
-				Еби са
+			<modal :show="modal.open" @close="close" class="modal" width="800" height="400">
+				<div class="model_content">
+					<img :src="this.open.thumbURL">
+					<h1>{{this.open.title}}</h1>
+					{{this.open.content_long || "Нищо няма, махай се."}}
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+				</div>
 			</modal>
 		</div>
 </template>
@@ -33,7 +108,7 @@ require('es6-promise').polyfill();
 
 let axios = require('axios');
 import _ from "lodash"
-import Modal from '../components/Modal'	  
+import Modal from '../components/ModalScroll'	  
 
 let events = null
 let changes = null
@@ -49,6 +124,9 @@ export default {
 				open: false,
 				width: 0,
 				height: 0
+			},
+			open: {
+				
 			}
 		}
 	},
@@ -83,6 +161,7 @@ export default {
 	methods: {
 		show(event) {
 			this.modal.open = true
+			this.open = event
 		},
 		close(){
 			this.modal.open = false
@@ -132,6 +211,11 @@ export default {
 <style scoped lang="stylus">
 .modal
 	color black
+	overflow auto
+
+.model_content
+	display flex
+	flex-direction column
 
 .card
 	background-color #FFF
@@ -242,15 +326,15 @@ h2 {
 
 #pages h1 {
 	font-weight: 900;
-	font-size: 4em;
-	color: white;
-	font-family: 'Russo One', sans-serif;
+	font-size: 3em;
+	// color: white;
+	// font-family: 'Russo One', sans-serif;
 
 	/*font-family: sans-serif;*/
 	text-align: center;
 	/*width: 700px;*/
 
-	margin: auto;
+	// margin: auto;
 }
 
 </style>
