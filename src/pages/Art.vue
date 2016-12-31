@@ -169,7 +169,7 @@ export default {
 	// sfloat: left
 	// height: 300px
 	position absolute
-	
+	cursor pointer
 	top 5px
 	left 5px
 	right 5px

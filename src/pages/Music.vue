@@ -1,20 +1,5 @@
 <template>
 
-<!-- 	<waterfall :line="line" :line-gap="300" :min-line-gap="200" :max-line-gap="400" :watch="items" align="left" class="page">
-
-		<waterfall-slot	v-for="(item, index) in items"
-			:width="item.width"
-			:height="item.height"
-			:order="index"
-			:key="item._id"
-		>
-		<div class="item" :style="{ background: 'url(' + url + ':5984/shows/' + item._id + '/' + Object.keys(item._attachments)[0] + ')' }">
-		<div class="item" >
-
-			{{item.title}}
-		</div>
-		</waterfall-slot>
-	</waterfall> -->
 <div class="page">
 	<div class="head">
 		<div class="ev">Музика</div>
@@ -23,26 +8,33 @@
 
 	<div class="gallery " ref="gallery">
 		
-		<div v-for="item in items" :class="['item', { long : item.long }]" >
-			<div class="bg-image" :style="{ background: item.img || 'cyan' }">
-
-			</div>
+		<div v-for="item in items" :class="['item ', { long : item.long }]" @click="show(item)">
+			<div class="bg-image" :style="{ background: 'url(' + item.thumb + ')' }"></div>
 			<div class="text">
 				<div class="title">{{item.title}}</div>
 				<div class="content">{{item.content || "Няма съдържание"}}</div>
-
 			</div>
 
 		</div>
 	</div>			
+
+	<modal ref="modal" :content="open.content_long" :title="open.title" :url="open.image" />
+
 </div>
+
+
 </template>
 
 <script>
 import Masonry from 'masonry-layout'
 import Packery from 'packery'
-let Isotope = require('isotope-layout')
+import Modal from '../components/ModalPage'	  
+
+
+let Isotope = require('isotope-layout')	  
+
 import _ from "lodash"
+import axios from 'axios'
 
 let music 
 let changes
@@ -58,9 +50,12 @@ export default {
 				this.items =  result.rows.map(doc => {
 					let res = doc.doc
 					
-					if(res._attachments){
-						res.img = "url(" + this.url + ':5984/music/' + res._id + '/' + Object.keys(res._attachments)[0] + ')'
-					}
+
+					res.files = _.fromPairs(Object.keys(res._attachments).map(file => file.split(".")))
+
+					res.thumb = this.url + ':5984/music/' + res._id + '/thumb.' + res.files["thumb"]
+					res.cover = this.url + ':5984/music/' + res._id + '/cover.' + res.files["cover"]
+					res.article = this.url + ':5984/music/' + res._id + '/article.md'
 
 					return res
 				}).reverse()
@@ -73,10 +68,21 @@ export default {
 			}).catch(function (err) {
 				console.log(err);
 			});
+		},
+		async show(item) {
+			let content = await axios.get(item.article)
+			
+			item.image = item.cover
+			item.content_long = content.data
+				//console.log(this.$refs.modal)
+
+
+			this.open = item
+			this.$refs.modal.o = true
 		}
 	},
 	components: {
-
+		Modal
 	},
 	mounted: function() {
 		masonry = new Packery(this.$refs.gallery, {
@@ -89,7 +95,10 @@ export default {
 	data(){
 		return {
 			line: 'v',
-			items: []
+			items: [],
+			open: {
+				content_long: ""
+			}
 		}
 	},
 	created: function() {
@@ -144,6 +153,7 @@ export default {
 	font-family sans-serif		
 
 .item
+
 	box-sizing border-box
 	// background white
 	// position absolute
@@ -159,6 +169,7 @@ export default {
 		
 
 	> .bg-image
+		cursor pointer
 		position absolute
 		top 5px
 		left 5px
@@ -172,6 +183,7 @@ export default {
 		background-repeat: no-repeat
 	
 	> .text 
+		cursor pointer
 		position absolute
 		font-family sans-serif
 		color white

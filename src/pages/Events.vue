@@ -8,107 +8,34 @@
 				
 				<div class="card" v-for="event in events"  @click="show(event)">
 					
-					<img v-if="!event._attachments" src="../../static/default-placeholder-1024x1024.png">
-					<img v-else v-bind:src="url + ':5984/events/' + event._id + '/' + Object.keys(event._attachments)[0] ">
+					<img v-if="!event.thumb" src="../../static/default-placeholder-1024x1024.png">
+					<img v-else v-bind:src="event.thumb">
 					<div class="content">
 						<h2>{{event.title}}</h2>
 						<p>
 						{{event.content}}
 						</p>
 						<div class="bot">
-							{{event.when}} - {{event.where}}
+							{{event.moment.format("YYYY-MM-D (dddd)")}} - {{event.moment.fromNow()}} {{event.where}}
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<modal :show="modal.open" @close="close" class="modal" width="800" height="400">
-				<div class="model_content">
-					<img :src="this.open.thumbURL">
-					<h1>{{this.open.title}}</h1>
-					{{this.open.content_long || "Нищо няма, махай се."}}
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-					tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-					quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-					consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-					cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</div>
-			</modal>
+		<modal ref="modal" :content="open.content_long" :title="open.title" :url="open.image"/>
 		</div>
 </template>
 
 <script>
 require('es6-promise').polyfill();
 
-let axios = require('axios');
+import axios from 'axios'
 import _ from "lodash"
-import Modal from '../components/ModalScroll'	  
+import Modal from '../components/ModalPage'	  
+
+import moment from "moment"
+
+moment.locale("bg");
 
 let events = null
 let changes = null
@@ -126,7 +53,7 @@ export default {
 				height: 0
 			},
 			open: {
-				
+				content_long: ""
 			}
 		}
 	},
@@ -142,7 +69,7 @@ export default {
 				// this.events =  result.rows.map(this.docToEvent)
 				this.getNew()
 				
-				return
+				return null
 
 			}
 			value = value.split(" ").map(e => `${e}* OR ${e}~`).join(" ")
@@ -153,30 +80,74 @@ export default {
 				}
 			}).then((e) => {
 				events.bulkGet({docs: e.data.rows}).then((res) => {
-					this.events = res.results.map((row) => this.docToEvent(row.docs[0].ok)) 
+					this.events = res.results.map((row) => {
+						let res = row.docs[0].ok
+						
+						//res.id = res._id
+						
+						return this.docToEvent(res)
+					}) 
 				})
 			})
 		}, 300)
 	},
+	computed: {
+		content: function() {
+			if(this.open.content_long){
+				return marked(this.open.content_long)
+			}else{
+				return "Няма съдържание"
+			}
+		}
+	},
+	watch: {
+		"$route": function(to, b){
+			console.log(to, b)
+		}
+	},
 	methods: {
-		show(event) {
-			this.modal.open = true
+		async show(event) {
+			
+			//let open = await events.get(event._id)
+			let reader = new FileReader()
+
+			let content = await axios.get(event.article)
+			
+			event.image = event.cover
+			event.content_long = content.data
+				//console.log(this.$refs.modal)
+
+
 			this.open = event
+			this.$refs.modal.o = true
+				// console.log(e)
+				
+			
+			
 		},
-		close(){
-			this.modal.open = false
-		},
-		docToEvent(row){
-			let res = row.doc || row
-			res.thumbURL = this.url + ':5984/events/' + res._id + '/' + Object.keys(res._attachments)[0]
+		docToEvent(res){			
+			res.files = _.fromPairs(Object.keys(res._attachments).map(file => file.split(".")))
+
+			//console.log(res.files)
+
+			// console.log(row, res)
+			res.thumb = this.url + ':5984/events/' + res._id + '/thumb.' + res.files["thumb"]
+			res.cover = this.url + ':5984/events/' + res._id + '/cover.' + res.files["cover"]
+			res.article = this.url + ':5984/events/' + res._id + '/article.md'
+			
+			res.date[1] -= 1
+
+			
+			res.moment = moment(res.date.reverse())
+			//console.log(res)
 			return res
 		},
 		getNew() {
 			let date = new Date()
 
-			events.query("test1/new-view", {include_docs: true, startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()] })
+			events.query("js/by-date", {startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()], include_docs: true })
 			.then((result) => {
-				this.events =  result.rows.map(this.docToEvent)
+				this.events =  result.rows.map((shit) => { return this.docToEvent(shit.doc)})
 			}).catch(function (err) {
 				console.log(err);
 			});
@@ -209,13 +180,6 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.modal
-	color black
-	overflow auto
-
-.model_content
-	display flex
-	flex-direction column
 
 .card
 	background-color #FFF
@@ -227,6 +191,7 @@ export default {
 	// display flex
 	positon relative
 	font-size 0
+	cursor pointer
 
 	img 
 		// display inline-block
@@ -265,8 +230,6 @@ export default {
 			color rgba(44,44,44,.5)
 			font-size 0.9em
 			
-
-		// display inline-block
 		
 
 .head

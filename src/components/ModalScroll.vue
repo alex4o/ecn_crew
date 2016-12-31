@@ -2,8 +2,8 @@
 <template>
 <transition name="modal">
 
-	<div class="modal-mask" @click="close" v-show="show">
-		<div class="modal-container" @click.stop>
+	<div class="modal-mask" @click="close" v-show="show" ref="mask">
+		<div class="modal-container" @click.stop ref="cont">
 			<slot></slot>
 		</div>
 	</div>
@@ -25,7 +25,14 @@ export default {
 		show: function(value) {
 			//console.log("isOpen", value)		
 			let overflow = value ? 'hidden' : 'auto'
-			document.body.style.overflow = overflow;		
+
+			document.body.style.overflow = overflow;	
+			if(value){
+				this.$nextTick(() => {
+					this.$refs.mask.scrollTop = 0
+				})
+			}
+
 		}
 	},
 	mounted: function () {
