@@ -57,7 +57,7 @@ nav {
 	flex-direction: row;
 	margin-bottom: 1em;
 	align-items center
-	height 80px
+	height 60px
 	position fixed
 	top 0px
 	left 0px
@@ -85,17 +85,17 @@ nav > .left {
 	// align-self baseline
 	font-family: sans-serif;
 	transition: all 1s;
-	height 80px
+	height 60px
 	
 	box-sizing: border-box
 
     > #logo {
-	    line-height: 80px;
+	    line-height: 60px;
 	    // margin: 10px;
 	    font-size: 3em;
 	    box-sizing: border-box;
-	    padding: 3vw;
-	    height: 80px;
+	    padding-left: 3vw;
+	    height: 60px;
 	}
 }
 
@@ -104,7 +104,7 @@ nav > .right {
 	/*flex: 2;*/
 	margin-left: auto;
 	margin-right: auto;
-	margin-right: 80px;
+	margin-right: 60px;
 	display: flex
 	align-items center
 	
@@ -121,7 +121,7 @@ nav > .right > a {
 	margin: 10px;
 	padding 10px
 
-	font-size: 2em;
+	font-size: 1.5em;
 	/*font-family: Helvetica;*/
 	font-family: 'Russo One', sans-serif;
 	// padding-bottom: 10px;

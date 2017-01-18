@@ -8,7 +8,7 @@
 
 	<div class="gallery" ref="gallery">
 		
-		<div v-for="item in items" :class="['item', { long : item.long }]" @click="show(item)">
+		<div v-for="item in items" :class="['item', { long : item.long }]" @click="$router.push({ name: 'sport', params: { id: item._id }})">
 			<div class="bg-image" :style="{ background: 'url(' + item.thumb || 'blue' + ')' }">
 
 			</div>
@@ -21,7 +21,7 @@
 		</div>
 	</div>	
 
-	<modal ref="modal" :content="open.content_long" :title="open.title" :url="open.image" :video="open.video"/>
+	<modal ref="modal" :content="open.content_long" :title="open.title" :url="open.image" :video="open.video" @close="close" :open="modal.open"/>
 
 </div>
 </template>
@@ -51,13 +51,8 @@ export default {
 					let res = doc.doc
 					
 
-					res.files = _.fromPairs(Object.keys(res._attachments || {}).map(file => file.split(".")))
 
-					res.thumb = this.url + ':5984/sport/' + res._id + '/thumb.' + res.files["thumb"]
-					res.cover = this.url + ':5984/sport/' + res._id + '/cover.' + res.files["cover"]
-					res.article = this.url + ':5984/sport/' + res._id + '/article.md'
-
-					return res
+					return this.docToRow(res)
 				}).reverse()
 
 				this.$nextTick(() => { // the new note hasn't been rendered yet, but in the nextTick, it will be rendered
@@ -68,6 +63,25 @@ export default {
 			}).catch(function (err) {
 				console.log(err);
 			});
+		},
+		docToRow(res){
+			let attachments = Object.keys(res._attachments || {})
+
+			//console.log(res.files)
+
+			// console.log(row, res)
+			if(attachments.length > 0){
+				res.files = _.fromPairs(attachments.map(file => file.split(".")))
+
+
+				res.thumb = this.url + ':5984/sport/' + res._id + '/thumb.' + res.files["thumb"]
+				res.cover = this.url + ':5984/sport/' + res._id + '/cover.' + res.files["cover"]
+				res.article = this.url + ':5984/sport/' + res._id + '/article.md'
+			}
+			res.files = _.fromPairs(Object.keys(res._attachments).map(file => file.split(".")))
+
+			return res
+
 		},
 		async show(item) {
 			let content
@@ -86,7 +100,31 @@ export default {
 
 
 			this.open = item
-			this.$refs.modal.o = true
+			this.modal.open = true
+		},
+		close() {
+			this.$router.push({ name: 'sport', params: { id: undefined }})
+			// this.modal.open = false
+
+		},
+		async load(id){
+			let doc = await sport.get(id)
+			let event = this.docToRow(doc)
+			this.show(event)
+		}
+	},
+	watch: {
+		"$route": function(to, b){
+			//window.e = this
+
+			console.log("To: ", to.params)
+			if(to.params.id){
+				// console.log("open")
+				this.load(to.params.id)
+			}else{
+				this.modal.open = false
+			}
+	
 		}
 	},
 	components: {
@@ -106,6 +144,9 @@ export default {
 			items: [],
 			open: {
 				content_long: ""
+			},
+			modal: {
+				open: false
 			}
 		}
 	},
@@ -120,6 +161,16 @@ export default {
 			this.get()
 		})
 		this.get()
+
+
+		if(this.$route.params.id == null){
+			//this.$router.push({ name: 'events', params: { id: "12" }})
+			// console.log("path")
+			console.log(this.$router)
+		}else{
+			this.load(this.$route.params.id)
+		}
+
 
 		window.onresize = () => {
 			console.log("resize")

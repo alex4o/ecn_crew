@@ -78,7 +78,7 @@ export default {
 	> .content
 		transition: all .7s
 		opacity: 0
-		margin-top: 80px
+		margin-top: 60px
 
 		&.active 
 			opacity: 1 !important

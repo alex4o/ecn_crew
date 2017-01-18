@@ -6,7 +6,8 @@
 					<input type="text" class="search" placeholder="Търсене" v-model="search" debounce="500">
 				</div>
 				
-				<div class="card" v-for="event in events"  @click="show(event)">
+			
+				<div class="card" v-for="event in events"  @click="$router.push({ name: 'events', params: { id: event._id }})">
 					
 					<img v-if="!event.thumb" src="../../static/default-placeholder-1024x1024.png">
 					<img v-else v-bind:src="event.thumb">
@@ -22,7 +23,7 @@
 				</div>
 			</div>
 
-		<modal ref="modal" :content="open.content_long" :title="open.title" :url="open.image"/>
+		<modal ref="modal" :content="open.content_long" :title="open.title" :url="open.image" :open="modal.open" @close="close"/>
 		</div>
 </template>
 
@@ -89,7 +90,16 @@ export default {
 					}) 
 				})
 			})
-		}, 300)
+		}, 300),
+		"$route": function(to, b){
+			if(to.params.id){
+				// console.log("open")
+				this.load(to.params.id)
+			}else{
+				this.modal.open = false
+			}
+	
+		}
 	},
 	computed: {
 		content: function() {
@@ -100,12 +110,16 @@ export default {
 			}
 		}
 	},
-	watch: {
-		"$route": function(to, b){
-			console.log(to, b)
-		}
-	},
 	methods: {
+		async load(id){
+			// console.log("asd")
+			// console.log("Opening id: ", id)
+		
+			let doc = await events.get(id)
+			let event = this.docToEvent(doc)
+			this.show(event)
+			
+		},
 		async show(event) {
 			
 			//let open = await events.get(event._id)
@@ -114,50 +128,61 @@ export default {
 			let content = await axios.get(event.article)
 			
 			event.image = event.cover
-			event.content_long = content.data
+			event.content_long = content.data || ""
 				//console.log(this.$refs.modal)
 
 
 			this.open = event
-			this.$refs.modal.o = true
+			this.modal.open = true
+
 				// console.log(e)
-				
-			
-			
+							
+		},
+		close() {
+			this.$router.push({ name: 'events', params: { id: undefined }})
 		},
 		docToEvent(res){			
-			res.files = _.fromPairs(Object.keys(res._attachments).map(file => file.split(".")))
+			let attachments = Object.keys(res._attachments || {})
 
 			//console.log(res.files)
 
 			// console.log(row, res)
-			res.thumb = this.url + ':5984/events/' + res._id + '/thumb.' + res.files["thumb"]
-			res.cover = this.url + ':5984/events/' + res._id + '/cover.' + res.files["cover"]
-			res.article = this.url + ':5984/events/' + res._id + '/article.md'
-			
-			res.date[1] -= 1
+			if(attachments.length > 0){
+				res.files = _.fromPairs(attachments.map(file => file.split(".")))
+
+
+				res.thumb = this.url + ':5984/events/' + res._id + '/thumb.' + res.files["thumb"]
+				res.cover = this.url + ':5984/events/' + res._id + '/cover.' + res.files["cover"]
+				res.article = this.url + ':5984/events/' + res._id + '/article.md'
+			}
+			//res.date[1] -= 1
 
 			
-			res.moment = moment(res.date.reverse())
+			//res.moment = moment(res.date.reverse())
+			res.moment = moment(res.date)
 			//console.log(res)
 			return res
 		},
 		getNew() {
-			let date = new Date()
+			let date = new moment()
+			// console.log("wtf")
+			// console.log(moment, date, date.valueOf())
 
-			events.query("js/by-date", {startkey: [date.getDate(),date.getMonth() + 1, date.getFullYear()], include_docs: true })
+			events.query("js/by-date", {startkey: date.valueOf(), include_docs: true })
 			.then((result) => {
 				this.events =  result.rows.map((shit) => { return this.docToEvent(shit.doc)})
-			}).catch(function (err) {
-				console.log(err);
-			});
+			})
+			// .catch(function (err) {
+			// 	console.log(err);
+			// });
 		}
 	},
 	components: {
 		Modal
 	},
-	created: function() {
-		events = this.$pouchDB.events()
+	created() {
+		// console.log("created")
+		window.e = events = this.$pouchDB.events()
 		this.url = 'http://' + this.$pouchDB.url
 
 		changes = events.changes({live: true, since: "now"}).on("change", (e) => {
@@ -165,8 +190,19 @@ export default {
 		})
 
 		this.getNew()
+
+		// console.log(this.$route.params, this.$router)
+		if(this.$route.params.id == null){
+			//this.$router.push({ name: 'events', params: { id: "12" }})
+			// console.log("path")
+			console.log(this.$router)
+		}else{
+			this.load(this.$route.params.id)
+		}
 	},
-	mounted: function () {
+	mounted() {
+		// console.log("created")
+
 		// console.log("mounted")
 
 	},

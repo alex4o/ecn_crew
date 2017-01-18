@@ -3,6 +3,8 @@
 <transition name="modal">
 
 	<div class="modal-mask" @click="close" v-show="show" ref="mask">
+		<div class="close" @click="close">X</div>
+
 		<div class="modal-container" @click.stop ref="cont">
 			<slot></slot>
 		</div>
@@ -43,6 +45,17 @@ export default {
 
 <style lang="stylus" scoped>
 
+.close 
+	position: fixed;
+	color white
+	top: 20px
+	right 50px
+	transform scale(2,1.5)
+	cursor: pointer
+	transition: color .3s
+	&:hover
+		color white
+		
 .modal-mask
 	position: fixed;
 	z-index: 9998;

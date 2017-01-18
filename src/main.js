@@ -4,6 +4,7 @@ import App from './App.vue'
 import Home from './pages/Home.vue'
 import Events from './pages/Events.vue'
 import Art from './pages/Art.vue'
+import Gallery from './pages/Gallery.vue'
 import Shows from './pages/Shows.vue'
 import Music from './pages/Music.vue'
 import Sport from './pages/Sport.vue'
@@ -13,6 +14,8 @@ import PouchDB from "pouchdb"
 
 import StdNav from './components/StdNav'
 import HomeNav from './components/HomeNav'
+
+let DevNav = StdNav // just rename it in case it could change
 
 require("normalize.css")
 
@@ -49,7 +52,7 @@ class VuePouch {
 
 Vue.use(VueRouter)
 
-let vp = new VuePouch(["events", "art", "music", "shows", "sport"], "ecncrew.ml")
+let vp = new VuePouch(["events", "art", "music", "shows", "sport", "schema"], "ecncrew.ml")
 console.log(vp)
 
 Vue.use(vp)
@@ -62,36 +65,62 @@ let router = new VueRouter({
 			nav: HomeNav
 		}
 	}, {
-		path: "/events",
+		path: "/events/:id?",
+		name: "events",
 		components: {
 			default: Events,
 			nav: StdNav
 		}
 	}, {
 		path: "/art",
+		name: "art",
 		components: {
 			default: Art,
 			nav: StdNav
 		}
-	}, {
-		path: "/shows",
+	},
+	{
+		path: "/art/gallery/:id?",
+		name: "gallery",
+		components: {
+			default: Gallery,
+			nav: StdNav
+		}
+	},
+	{
+		path: "/shows/:id?",
+		name: "comedy",
 		components: {
 			default: Shows,
 			nav: StdNav
 		}
 	}, {
-		path: "/music",
+		path: "/music/:id?",
+		name: "music",
 		components: {
 			default: Music,
 			nav: StdNav
 		}
 	}, {
-		path: "/sport",
+		path: "/sport/:id?",
+		name: "sport",
 		components: {
 			default: Sport,
 			nav: StdNav
 		}
-	}, ]
+	}, 
+	{
+		path: "/admin/:db?",
+		components: {
+			default: resolve => {
+				require.ensure(['./pages/Admin.vue'], () => {
+					resolve(require('./pages/Admin.vue'))
+				})
+			},
+			nav: StdNav
+
+		}
+	}]
 })
 
 new Vue({

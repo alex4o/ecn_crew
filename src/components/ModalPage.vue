@@ -1,6 +1,6 @@
 
 <template>
-	<modal :show="this.o" @close="close" class="modal" width="800" height="400">
+	<modal :show="open" @close="close" class="modal" width="800" height="400">
 		<div class="model_content">
 			<iframe v-if="video != null" width="760" height="430" :src="video" frameborder="0"></iframe>
 			<div v-else :src="this.url" class="image" :style="{ background: 'url(' + url + ')' }"></div>
@@ -21,27 +21,26 @@ import marked from "marked"
 
 export default {
 	name: 'modalPage',
-	props: ['url', 'title', 'content', 'video'],
+	props: ['url', 'title', 'content', 'video', 'open'],
 	components: {
 		Modal
 	},
 	methods: {
-		close(){
-			this.o = false
-		},
-		open(){
-			
-			this.o = true
+		close() {
+			this.$emit('close')
+			// console.log("close")
 		}
 	},
 	data(){
 		return {
-			o: false
 		}
 	},
 	computed: {
 		content_html() {
-			return marked(this.content)
+			if(this.content != "" || this.content != null){
+				return marked(this.content)
+			}
+			return ""		
 
 		}
 	},
