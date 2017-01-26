@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 
 import Home from './pages/Home.vue'
+import Article from './pages/Article.vue'
+
 import Events from './pages/Events.vue'
 import Art from './pages/Art.vue'
 import Gallery from './pages/Gallery.vue'
@@ -60,11 +62,15 @@ Vue.use(vp)
 let router = new VueRouter({
 	routes: [{
 		path: "/",
-		components: {
-			default: Home,
-			nav: HomeNav
-		}
-	}, {
+		component: Home
+	
+	},
+	{
+		path: "/article/:id",
+		name: "article",
+		component: Article
+	},
+	{
 		path: "/events/:id?",
 		name: "events",
 		components: {
@@ -125,7 +131,6 @@ let router = new VueRouter({
 
 new Vue({
 	el: '#app',
-	template: '<App/>',
 	router: router,
 	components: {
 		App

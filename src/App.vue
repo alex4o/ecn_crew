@@ -1,9 +1,9 @@
 
-<template>
+<!-- <template>
 
 
 <div class="main" >
-		<div class="bg" v-bind:style="{ background: bg }"></div>
+	<div class="bg" v-bind:style="{ background: bg }"></div>
 
 		<router-view name="nav" v-on:content="show"></router-view>
 		<router-view v-on:bg="chBg" class="content" v-bind:class="{ active: content }"></router-view>
@@ -11,6 +11,42 @@
 		<radio/>
 
 	</div>    
+</template> -->
+
+<template>
+
+	<div id="root">
+
+		<header class="">
+			
+				
+			<router-link to="/" class="logo">
+				ECNC
+			</router-link>
+				
+			<nav class="sub">
+				<span>Събития</span>
+				<span>На запис</span>
+				<!-- <span>Контакти</span> -->
+				<span>За нас</span>
+			</nav>
+		</header>
+
+		<div class="page">
+			<nav class="side">
+				<ul>
+					<li>Галерии</li>
+					<li>Лицата в ECNC</li>
+					<li>Радио</li>
+				</ul>
+			</nav>
+			<main>
+				<router-view class="content"></router-view>
+			</main>
+		</div>
+		
+	</div>
+
 </template>
 
 <script>
@@ -54,45 +90,146 @@ export default {
 </script>
 
 <style lang="stylus">
-@import url('https://fonts.googleapis.com/css?family=Russo+One');
 
+@import "var.styl"
 
-.bg
+nav.side 
+	background: grey
 	position fixed
-	top 0px
-	bottom 0px
-	left 0px
-	right 0px
-	z-index -1
-	background-position: center !important
-	background-origin: border-box !important
-	background-size: cover !important
-	background-repeat: no-repeat
+	top 0
+	left 10 - menu-size
+	
+	width: menu-size
 	height: 100vh
-	transition: all 1s
+	transition all .4s
+	z-index 10
+	&:hover
+		left 0
+		
+	
+	// position: absolute
+	// top: 100px
+	// left: 0px
+	ul
+		list-style none
+		padding: 0px
+		margin: 0px
+		
+		li
+			color white
+			font-size: 1.3em
+			padding-left: 20px
+			line-height: 50px
+			background: grey
+			transition: all .3s
+			
+			&:hover
+				background: #777
 	
 
-.main 
-	transition: all 1s
+#app 
+	width: 100%
 	
-	> .content
-		transition: all .7s
-		opacity: 0
-		margin-top: 60px
+#root
+	width: 100%
+			
+.page 
+	display flex
+	
 
-		&.active 
-			opacity: 1 !important
+header
+	background: #3f51b5
+	
+	@media (max-width: 800px)
+		height: header-size - 20px
+		.logo
+			flex 1 1
+			line-height: header-size - 20px !important
+			
+			width 170px !important
+			border none  !important
 
 
-a {
-	text-decoration: none;
-}
+	@media (max-width: 600px)
+		flex-direction: column
+	
+		height: header-size
+		.sub
+			background: darken(#3f51b5, 5)
+			
 
-.box
-	display: flex;
+		.logo
+			
+			width auto
+			line-height: header-size - 40px !important
+
+			
+	height: header-size
+	width: 100vw
+	display: flex !important
+	flex-direction: row
+	// transition height flex-direction .7s
 
 
+	.sub
+		// background: lighten(#3f51b5, 8)
+		// transition all 1s
+	
+		line-height: sub-header-size
+		padding-left: 20px
+		box-sizing border-box
+		color: white
+		flex: 1
+		align-items: flex-end;
+		display: flex
+		span
+			line-height 40px
+			box-sizing border-box
+			padding: 0 10px 0px 10px
 
+	.logo
+		box-sizing border-box	
+		transition all 1s
+		
+		// height: header-size
 
+		line-height header-size
+ 
+		
+		display: block
+		
+		text-decoration none
+		color white
+		font-size 3em
+		// padding-left: 25px
+		// padding-right: 25px
+		text-align center
+		box-sizing border-box	
+		
+		width: menu-size
+		border-right 2px white solid
+			
+main
+	display: flex !important
+	// flex-direction: row
+	justify-content center
+	flex 1
+	// overflow-x: hidden
+	// overflow-y: scroll
+	// height: calc(100vh - 100px)
+	// position 
+	
+	h2
+		font-size: 2em
+
+		margin-top 40px
+		margin-bottom 0px
+		margin-left 20px
+		padding 0px
+		// width calc(100vw - 380px)
+					
+					
+	
+		
 
 </style>
