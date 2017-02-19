@@ -93,6 +93,11 @@ export default {
 
 @import "var.styl"
 
+body 
+	font-family: "Roboto"
+	background darken(white, 7)
+	
+
 nav.side 
 	background: grey
 	position fixed

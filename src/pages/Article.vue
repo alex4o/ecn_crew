@@ -5,25 +5,12 @@
 
 		<article>
 			<h1>
-			Туй е заглавието!
+			{{article.title}}
 			</h1>
 
 			<img src="http://placehold.it/1920x1080">
 			
-			<p>
-			Туй е текста Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			</p>
-
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo ex voluptates dolorum necessitatibus reprehenderit ducimus rerum quae unde aut, debitis fuga minima alias quod incidunt doloribus iure odit molestiae, iste.</p>
-
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo ex voluptates dolorum necessitatibus reprehenderit ducimus rerum quae unde aut, debitis fuga minima alias quod incidunt doloribus iure odit molestiae, iste.</p>
-
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo ex voluptates dolorum necessitatibus reprehenderit ducimus rerum quae unde aut, debitis fuga minima alias quod incidunt doloribus iure odit molestiae, iste.</p>
+			{{article.body}}
 			
 <!-- 			<div class="comments">
 				<div class="comment" v-for="item in [{user: 'pe4ka', text: 'oasdf'}, {}, {}, {}]">
@@ -37,12 +24,15 @@
 			<div class="category">
 				#категория
 			</div>
+			<div class="category">
+				{{article.writer.name}}
+			</div>
 			<ul>
-				<li>Новина 1</li>
-				<li>Новина 2</li>
-				<li>Новина 3</li>
-				<li>Новина 4</li>
-				<li>Новина 5</li>
+				<li v-for='item in article.writer.articles'>
+					<router-link :to="'/article/' + item.id" class="link">
+						{{item.title}}
+					</router-link>
+				</li>
 			</ul>
 		</aside>
 
@@ -50,20 +40,68 @@
 </template>
 
 <script>
+import axios from "axios"
+
+async function load(id) {
+		let res = await axios.post(`http://${location.hostname}:4000/graphql`,  
+		`	{
+				article(id: ${id}) {
+					title
+					body
+					writer {
+						name
+						articles {
+							id
+							title
+						}
+					}
+				}
+			}
+		`)
+		if(res.data.error) {
+			console.log(res.data.error)
+		}
+		return res.data.data
+}
 
 export default {
 	components: {
 
 	},
 	async mounted() {
+		// console.log(this)
 
+
+		// console.log(res.data)
+
+		let {article} = await load(this.$route.params.id)
+		this.article = article
 
 	},
 	methods: {
 
 	},
+	watch: {
+		'$route': async function (to, from) {
+			let {article} = await load(to.params.id)
+			this.article = article
+		}
+	},
+	route: {
+   		canReuse: false
+	},
 	data: () => { 
-		return {}
+		return {
+			article: {
+				title: "",
+				body: "",
+				writer: {
+					name: "",
+					articles: []
+				}
+			}
+
+		}
 	}
 }
 
