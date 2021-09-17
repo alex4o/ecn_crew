@@ -54,7 +54,7 @@ iw = image-width
 .content
 	position relative
 	
-	for i in 1..4
+	for i in 1 .. column-count
 		@media (min-width: (i * iw ) px)
 			width: image-width * i
 			
@@ -69,6 +69,7 @@ iw = image-width
 	section
 		display: flex
 		flex-wrap: wrap
+		
 		.box
 			display flex
 			width: image-width

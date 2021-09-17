@@ -4,12 +4,14 @@
 		
 
 		<article>
-			<h1>
-			Туй е заглавието!
-			</h1>
+			
 
 			<img src="http://placehold.it/1920x1080">
 			
+			<h1>
+				Туй е заглавието!
+			</h1>
+
 			<p>
 			Туй е текста Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -92,7 +94,7 @@ export default {
 
 		
 		h1
-			text-align center
+			text-align left
 		
 		p
 			padding 0px 15px 0px 15px 
